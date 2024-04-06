@@ -128,7 +128,10 @@
                                 <action selector="closePressed" destination="eug-Fk-a6I" id="TIh-q6-v8S"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="gearshape" catalog="system" id="OgO-in-h7Q"/>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="gearshape" catalog="system" id="OgO-in-h7Q"/>
+                            <barButtonItem title="Item" image="plus" catalog="system" id="AP2-xx-CzY"/>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <modalFormSheetSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -214,7 +217,7 @@
                 <navigationController id="gx5-bH-rbL" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="NbA-r2-hMH"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="0bW-Ul-8ek">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="102"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

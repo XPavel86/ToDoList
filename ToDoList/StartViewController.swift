@@ -14,11 +14,10 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     //@IBOutlet var profilText: UITextField!
     
-    let users = UserList.getUserList()
+    var profiles = ProfileManager.shared.getProfiles()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillLayoutSubviews() {
@@ -26,7 +25,7 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         usersPickerView?.delegate = self
         usersPickerView?.dataSource = self
         
-        if users.isEmpty {
+        if profiles.isEmpty {
             usersPickerView.isHidden = true
             userTextField.isHidden = false
         } else {
@@ -40,11 +39,11 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        users.count
+        profiles.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        users[row].user
+        profiles[row].name
     }
     
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -53,8 +52,9 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         guard let tasksVC = destinationVC.topViewController as? TasksListViewController  else { return }
         
         if let selectedRow = usersPickerView?.selectedRow(inComponent: 0) {
-            tasksVC.tasksList = users[selectedRow]
-        }      
+            tasksVC.profile = profiles[selectedRow]
+            tasksVC.profileIndex = selectedRow
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

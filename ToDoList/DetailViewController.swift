@@ -11,7 +11,11 @@ class DetailViewController: UIViewController {
 
     @IBOutlet var textView: UITextView!
    
-    var text = ""
+    //var category: DataStoreNew.Category?
+    var section: Int!
+    var profileIndex: Int!
+    var taskIndex: Int!
+    var text: String!
     var previousText: String?
    
     override func viewDidLoad() {
@@ -36,16 +40,13 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func saveButton() {
-        saveTask()
+        ProfileManager.shared.changeTaskDescription(profileIndex: profileIndex, categoryIndex: section, taskIndex: taskIndex, newDescription: textView.text)
     }
     
     @IBAction func createNewTaskButton() {
-        print("stub - create a new task")
+        ProfileManager.shared.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
     }
     
-    private func saveTask() {
-        print("stub - save  task")
-    }
 }
 
 

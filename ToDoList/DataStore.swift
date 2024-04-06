@@ -25,7 +25,7 @@ var names = [
     ]
     
     var tasks = [
-        "Buy groceries Buy groceries Buy groceries Buy groceries Buy groceries Buy groceries Finish homework Finish homework \nFinish homework Finish homeworkFinish homework Finish homeworkFinish homework Finish homework",
+        "Buy groceries ",
         "Finish homework",
         "Call mom",
         "Go to the gym",
@@ -54,3 +54,4 @@ var names = [
     
     private init() {}
 }
+

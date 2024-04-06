@@ -1,6 +1,6 @@
 struct UserList {
     
-    var user: String
+    var name: String
     var categories: [Category]
     
     struct Category {
@@ -27,7 +27,7 @@ struct UserList {
                 userCategories.append(category)
             }
             
-            let userList = UserList(user: name, categories: userCategories)
+            let userList = UserList(name: name, categories: userCategories)
             userLists.append(userList)
         }
         

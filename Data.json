@@ -1,0 +1,35 @@
+{
+  "profiles": [
+    {
+      "name": "Profile 1",
+      "categories": [
+        {
+          "name": "Category 1",
+          "tasks": [
+            {"description": "Task 1", "ready": true},
+            {"description": "Task 2", "ready": false},
+            {"description": "Task 3", "ready": true}
+          ]
+        },
+        {
+          "name": "Category 2",
+          "tasks": [
+            {"description": "Task 4", "ready": false},
+            {"description": "Task 5", "ready": true}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Profile 2",
+      "categories": [
+        {
+          "name": "Category 3",
+          "tasks": [
+            {"description": "Task 6", "ready": false}
+          ]
+        }
+      ]
+    }
+  ]
+}

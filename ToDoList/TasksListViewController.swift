@@ -7,10 +7,26 @@
 
 import UIKit
 
-class TasksListViewController: UITableViewController {
+protocol DetailViewControllerDelegate: AnyObject {
+    func didUpdate()
+}
+
+class TasksListViewController: UITableViewController, DetailViewControllerDelegate {
+   
+    func didUpdate() {
+        tableView.reloadData()
+    }
     
-    var profile: DataStoreNew.Profile!
+    
+    @IBOutlet var editButton: UIBarButtonItem!
+    
+    var profile: DataStore.Profile!
+    
     var profileIndex: Int!
+    @IBAction func editPressed() {
+        self.isEditing.toggle()
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,26 +50,19 @@ class TasksListViewController: UITableViewController {
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         if let indexPath = tableView.indexPathForSelectedRow {
             let detailsVC = segue.destination as? DetailViewController
             
             detailsVC?.profileIndex = profileIndex
             detailsVC?.section = indexPath.section
             detailsVC?.taskIndex = indexPath.row
-
-            detailsVC?.text = profile.categories[indexPath.section].tasks[indexPath.row].description
-        }
-    }
-    
-    @IBAction func unwind(for segue: UIStoryboardSegue ) {
-        
-       
-        if let indexPath = tableView.indexPathForSelectedRow {
-           // let detailsVC = segue.source as? DetailViewController
+            detailsVC?.profile = profile
             
-            tableView.reloadRows(at: [indexPath], with: .automatic)
+            detailsVC?.text = profile.categories[indexPath.section].tasks[indexPath.row].description
+            detailsVC?.delegate = self
         }
+
     }
 
     override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
@@ -70,7 +79,8 @@ class TasksListViewController: UITableViewController {
         // Отключаем отображение иконки перемещения
         return .none
     }
-    
+   
+   /*
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         // Добавляем действие для свайпа вправо (например, удаление)
         let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
@@ -111,7 +121,7 @@ class TasksListViewController: UITableViewController {
         return swipeConfiguration
     }
 
-  
+*/
     
 //    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
 //        // Получаем элемент, который мы собираемся переместить

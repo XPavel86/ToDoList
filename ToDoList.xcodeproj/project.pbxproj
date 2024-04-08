@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EF220BCD2BBF137A005E16AE /* DataStoreNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF220BCC2BBF137A005E16AE /* DataStoreNew.swift */; };
 		EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E1792BB85DD0000530A0 /* AppDelegate.swift */; };
 		EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */; };
 		EF60E17E2BB85DD0000530A0 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E17D2BB85DD0000530A0 /* StartViewController.swift */; };
@@ -17,10 +16,10 @@
 		EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */; };
 		EF8371BC2BB9C08500FBCC38 /* HederTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */; };
 		EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9072112BBD42CD008252B0 /* DetailViewController.swift */; };
+		EFC839482BC3F6250004E87A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC839472BC3F6250004E87A /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EF220BCC2BBF137A005E16AE /* DataStoreNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStoreNew.swift; sourceTree = "<group>"; };
 		EF60E1762BB85DD0000530A0 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60E1792BB85DD0000530A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +31,7 @@
 		EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListViewController.swift; sourceTree = "<group>"; };
 		EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HederTableViewCell.swift; sourceTree = "<group>"; };
 		EF9072112BBD42CD008252B0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		EFC839472BC3F6250004E87A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,19 +64,27 @@
 		EF60E1782BB85DD0000530A0 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				EFC839462BC3F5F70004E87A /* Models */,
 				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
-				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
+				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */,
-				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,
 				EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */,
-				EF220BCC2BBF137A005E16AE /* DataStoreNew.swift */,
+				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,
 				EF60E17F2BB85DD0000530A0 /* Main.storyboard */,
 				EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */,
 				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
 				EF60E1872BB85DD2000530A0 /* Info.plist */,
 			);
 			path = ToDoList;
+			sourceTree = "<group>";
+		};
+		EFC839462BC3F5F70004E87A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				EFC839472BC3F6250004E87A /* DataStore.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -154,9 +162,9 @@
 				EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */,
 				EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */,
 				EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */,
-				EF220BCD2BBF137A005E16AE /* DataStoreNew.swift in Sources */,
 				EF8371BC2BB9C08500FBCC38 /* HederTableViewCell.swift in Sources */,
 				EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */,
+				EFC839482BC3F6250004E87A /* DataStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,10 +12,7 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet var userTextField: UITextField!
     @IBOutlet var usersPickerView: UIPickerView!
     
-    @IBAction func change() {
-        
-        let manager = DataStore.Manager()
-        manager.changeTaskDescription(profileIndex: 0, categoryIndex: 0, taskIndex: 0, newDescription: "6656478987898789")
+    @IBAction func addProfile() {
 
     }
     
@@ -23,7 +20,7 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(profiles[0].categories)
+       
         
     }
     

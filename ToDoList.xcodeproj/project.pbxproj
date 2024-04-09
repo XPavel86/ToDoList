@@ -66,8 +66,8 @@
 			children = (
 				EFC839462BC3F5F70004E87A /* Models */,
 				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
-				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
 				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
+				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
 				EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */,
 				EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */,
 				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,

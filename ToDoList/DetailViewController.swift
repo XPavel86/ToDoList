@@ -7,11 +7,10 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var textView: UITextView!
     
-    //var category: DataStoreNew.Category?
     weak var delegate: DetailViewControllerDelegate?
     
     var section: Int!
@@ -24,29 +23,39 @@ class DetailViewController: UIViewController {
     
     var previousText: String?
     var isCreate = false
-    var cursor: Int!
-    
-    let arr: [String] = ["dsfsd23","sdff232","sdv3434"]
+    var changeText = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        textView.text = text
+        
+        textView.delegate = self
+        
         previousText = text
+        updateText()
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        changeText = true
+           // Проверяем, является ли длина нового текста больше максимально допустимой длины (например, 100 символов)
+           let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
+           return newText.count <= 1000 // Максимально допустимая длина
+       }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewDidLoad()
         
-        cursor = 0//taskIndex
-        
+        changeColor()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear (animated)
+        
+        saveText()
         delegate?.didUpdate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        saveText()
-        if textView.text.isEmpty && !isCreate  {
-            pm.removeTask(profileIndex: profileIndex, categoryIndex: section, removeTaskIndex: taskIndex)
-        }
+        
     }
     
     @IBAction func undoEditButton() {
@@ -61,8 +70,7 @@ class DetailViewController: UIViewController {
     
     @IBAction func clearTextButton() {
         if !textView.text.isEmpty {
-            previousText = textView.text
-            textView.text = ""
+            deleteText()
         }
     }
     
@@ -71,45 +79,106 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func toLeftTask() {
-        if cursor > 0 {
-            cursor -= 1
-            updateText()
-        }
+       saveText()
+       decIndex()
+       updateText()
+       isCreate = false
     }
     
     @IBAction func toRightTask() {
-        let taskCount = profile.categories[section].tasks.count - 1
-        if cursor < taskCount {
-            cursor += 1
-            updateText()
+        saveText()
+        incIndex()
+        updateText()
+        isCreate = false
+    }
+    
+    func updateText(_ textTitle: String = "") {
+        let count = profile.categories[section].tasks.count
+        
+        var afterTitle = "\(taskIndex + 1 )/\(count)"
+        
+        if !textTitle.isEmpty {
+            afterTitle = textTitle
+        }
+        title = "\(profile.categories[section].name) \(afterTitle)"
+        
+        if profile.categories[section].tasks.isEmpty {
+            title = "No tasks"
+            textView.text = ""
+        } else  {
+            textView.text = profile.categories[section].tasks[taskIndex].description
         }
     }
     
-    func updateText() {
-        textView.text = profile.categories[section].tasks[cursor].description
+    
+    @IBAction func copyTaskButton() {
+        if !textView.text.isEmpty {
+            pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
+            taskIndex = profile.categories[section].tasks.count - 1
+            
+            updateText()
+        }
     }
     
     @IBAction func createNewTaskButton() {
         saveText()
         
+        updateText("New")
         textView.text = ""
-        previousText = ""
         isCreate = true
     }
     
     func saveText() {
         if !textView.text.isEmpty {
-            if previousText != textView.text && previousText != "" {
+            if  previousText != textView.text && changeText && !isCreate {
                 pm.changeTaskDescription(profileIndex: profileIndex, categoryIndex: section, taskIndex: taskIndex, newDescription: textView.text)
-            } else
-            if previousText == "" {
+                print("saveChange")
+            }
+            
+            if isCreate {
                 pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
-                taskIndex += 1
+                incIndex()
+                print("isCreate")
             }
             previousText = textView.text
         }
         isCreate = false
+        changeText = false
     }
+    
+    @IBAction func changeStatusTask() {
+        profile.categories[section].tasks[taskIndex].ready.toggle()
+        changeColor()
+    }
+    
+     func changeColor() {
+        view.backgroundColor = profile.categories[section].tasks[taskIndex].ready
+            ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
+            : .systemBackground
+         
+         textView.backgroundColor = view.backgroundColor
+    }
+    
+    func deleteText() {
+        if !textView.text.isEmpty && taskIndex >= 0 {
+            pm.removeTask(profileIndex: profileIndex, categoryIndex: section, removeTaskIndex: taskIndex)
+            decIndex()
+            updateText()
+        }
+    }
+    
+    func incIndex() {
+        if taskIndex < profile.categories[section].tasks.count - 1 {
+            taskIndex += 1
+        }
+    }
+    
+    func decIndex() {
+            if taskIndex > 0 {
+                taskIndex -= 1
+            }
+        }
 }
+
 
 

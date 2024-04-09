@@ -32,7 +32,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="plus" catalog="system"/>
                                 <connections>
-                                    <action selector="change" destination="BYZ-38-t0r" eventType="touchUpInside" id="UpD-tD-NBp"/>
+                                    <action selector="addProfilPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="UpD-tD-NBp"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HJq-NV-j5A" userLabel="Enter">
@@ -59,7 +59,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-78.260869565217391" y="-28.532608695652176"/>
+            <point key="canvasLocation" x="255" y="-29"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="pY3-2u-qfe">
@@ -159,29 +159,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-cb-k0V" userLabel="BottomMenu">
-                                <rect key="frame" x="127.33333333333334" y="681.33333333333337" width="286.33333333333326" height="34.333333333333371"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-cb-k0V" userLabel="BottomMenu">
+                                <rect key="frame" x="34.333333333333343" y="681.33333333333337" width="379.33333333333326" height="34.333333333333371"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgX-di-HnE" userLabel="StatusButton">
+                                        <rect key="frame" x="0.0" y="0.0" width="47.666666666666664" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="checkmark" catalog="system"/>
+                                        <connections>
+                                            <action selector="changeStatusTask" destination="L0L-Xi-65Y" eventType="touchUpInside" id="YlL-3C-uJv"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnd-HX-h2K" userLabel="LeftButton">
-                                        <rect key="frame" x="0.0" y="0.0" width="51" height="34.333333333333336"/>
+                                        <rect key="frame" x="52.666666666666657" y="0.0" width="51" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrowshape.left" catalog="system"/>
                                         <connections>
-                                            <action selector="clearTextButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="cTv-Le-uOX"/>
                                             <action selector="toLeftTask" destination="L0L-Xi-65Y" eventType="touchUpInside" id="7oA-OF-WkT"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdO-Tj-JCa" userLabel="RightButton">
-                                        <rect key="frame" x="60.000000000000014" y="0.0" width="51" height="34.333333333333336"/>
+                                        <rect key="frame" x="108.66666666666666" y="0.0" width="51" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrowshape.right" catalog="system"/>
                                         <connections>
                                             <action selector="toRightTask" destination="L0L-Xi-65Y" eventType="touchUpInside" id="3uz-RK-bNq"/>
-                                            <action selector="undoEditButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="XlT-pu-nj0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o68-Zb-qlz" userLabel="TrashButton">
-                                        <rect key="frame" x="120" y="0.0" width="48" height="34.333333333333336"/>
+                                        <rect key="frame" x="164.66666666666666" y="0.0" width="48" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
                                         <connections>
@@ -189,15 +195,23 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pig-LK-83R" userLabel="UndoButton">
-                                        <rect key="frame" x="177" y="0.0" width="49.666666666666657" height="34.333333333333336"/>
+                                        <rect key="frame" x="217.66666666666666" y="0.0" width="49.666666666666657" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrow.uturn.backward" catalog="system"/>
                                         <connections>
                                             <action selector="undoEditButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="sZg-ZR-e3p"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67y-uW-Tfj" userLabel="CopyTaskButton">
+                                        <rect key="frame" x="272.33333333333337" y="0.0" width="51.333333333333314" height="34.333333333333336"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="doc.on.doc" catalog="system"/>
+                                        <connections>
+                                            <action selector="copyTaskButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="uQQ-be-bcc"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyA-DM-3C9" userLabel="NewTaskButton">
-                                        <rect key="frame" x="235.66666666666666" y="0.0" width="50.666666666666657" height="34.333333333333336"/>
+                                        <rect key="frame" x="328.66666666666669" y="0.0" width="50.666666666666686" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system"/>
                                         <connections>
@@ -208,6 +222,7 @@
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="UKx-vz-P8A" userLabel="TextView">
                                 <rect key="frame" x="16" y="118" width="382" height="561.66666666666663"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -238,7 +253,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vjn-cy-rNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2705.7971014492755" y="-30.978260869565219"/>
+            <point key="canvasLocation" x="2500" y="-29"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BZa-Io-JTB">
@@ -255,13 +270,15 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bNa-nJ-zEY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="869" y="-28"/>
+            <point key="canvasLocation" x="971" y="-29"/>
         </scene>
     </scenes>
     <resources>
         <image name="arrow.uturn.backward" catalog="system" width="128" height="113"/>
         <image name="arrowshape.left" catalog="system" width="128" height="104"/>
         <image name="arrowshape.right" catalog="system" width="128" height="104"/>
+        <image name="checkmark" catalog="system" width="128" height="114"/>
+        <image name="doc.on.doc" catalog="system" width="116" height="128"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="slider.horizontal.3" catalog="system" width="128" height="99"/>

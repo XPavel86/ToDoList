@@ -36,7 +36,6 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         changeText = true
-           // Проверяем, является ли длина нового текста больше максимально допустимой длины (например, 100 символов)
            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
            return newText.count <= 1000 // Максимально допустимая длина
        }
@@ -70,7 +69,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func clearTextButton() {
         if !textView.text.isEmpty {
-            deleteText()
+            deleteTask()
         }
     }
     
@@ -159,7 +158,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
          textView.backgroundColor = view.backgroundColor
     }
     
-    func deleteText() {
+    func deleteTask() {
         if !textView.text.isEmpty && taskIndex >= 0 {
             pm.removeTask(profileIndex: profileIndex, categoryIndex: section, removeTaskIndex: taskIndex)
             decIndex()

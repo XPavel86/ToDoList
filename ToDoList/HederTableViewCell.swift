@@ -9,7 +9,7 @@ import UIKit
 
 class HederTableViewCell: UITableViewCell {
     
-    @IBOutlet var CategoryLabel: UILabel!
+    @IBOutlet var сategoryLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

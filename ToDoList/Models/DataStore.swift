@@ -52,7 +52,7 @@ final class DataStore {
     }
     
     class Task {
-        var description: String = ""
+        var text: String = ""
         var ready: Bool = false
     }
     
@@ -126,7 +126,7 @@ final class DataStore {
         func addTask(profileIndex: Int, categoryIndex: Int, newDescription: String)  {
             let newTask = DataStore.Task()
             
-            newTask.description = newDescription
+            newTask.text = newDescription
                 dataStore.profiles[profileIndex].categories[categoryIndex].tasks.append(newTask)
             observer?.taskDidСhanged()
         }
@@ -141,7 +141,7 @@ final class DataStore {
         }
         
         func changeTaskDescription(profileIndex: Int, categoryIndex: Int, taskIndex: Int, newDescription: String)  {
-                dataStore.profiles[profileIndex].categories[categoryIndex].tasks[taskIndex].description = newDescription
+                dataStore.profiles[profileIndex].categories[categoryIndex].tasks[taskIndex].text = newDescription
                 observer?.taskDidСhanged()
             
         }
@@ -168,7 +168,7 @@ final class DataStore {
                 // Создание задач
                 for taskIndex in 1...10 {
                     let task = Task()
-                    task.description = "Task \(taskIndex) in Category \(categoryIndex) of Profile \(profileIndex)"
+                    task.text = "Task \(taskIndex) in Category \(categoryIndex) of Profile \(profileIndex)"
                     task.ready = Bool.random()
                     
                     category.tasks.append(task)

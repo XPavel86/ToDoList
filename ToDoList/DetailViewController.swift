@@ -105,7 +105,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             title = "No tasks"
             textView.text = ""
         } else  {
-            textView.text = profile.categories[section].tasks[taskIndex].description
+            textView.text = profile.categories[section].tasks[taskIndex].text
         }
     }
     
@@ -128,38 +128,42 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     func saveText() {
-        if !textView.text.isEmpty {
-            if  previousText != textView.text && changeText && !isCreate {
+         
+        if !textView.text.isEmpty && previousText != textView.text && changeText && !isCreate {
                 pm.changeTaskDescription(profileIndex: profileIndex, categoryIndex: section, taskIndex: taskIndex, newDescription: textView.text)
                 print("saveChange")
             }
-            
-            if isCreate {
-                pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
-                incIndex()
-                print("isCreate")
-            }
-            previousText = textView.text
+
+        if !textView.text.isEmpty && isCreate {
+            pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
+            incIndex()
+            print("isCreate")
         }
         isCreate = false
         changeText = false
+        
+        previousText = textView.text
     }
     
     @IBAction func changeStatusTask() {
-        profile.categories[section].tasks[taskIndex].ready.toggle()
-        changeColor()
+        if !profile.categories[section].tasks.isEmpty {
+            profile.categories[section].tasks[taskIndex].ready.toggle()
+            changeColor()
+        }
     }
     
      func changeColor() {
-        view.backgroundColor = profile.categories[section].tasks[taskIndex].ready
-            ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
-            : .systemBackground
-         
-         textView.backgroundColor = view.backgroundColor
+         if !profile.categories[section].tasks.isEmpty {
+             view.backgroundColor = profile.categories[section].tasks[taskIndex].ready
+             ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
+             : .systemBackground
+             
+             textView.backgroundColor = view.backgroundColor
+         }
     }
     
     func deleteTask() {
-        if !textView.text.isEmpty && taskIndex >= 0 {
+        if !textView.text.isEmpty && !profile.categories[section].tasks.isEmpty {
             pm.removeTask(profileIndex: profileIndex, categoryIndex: section, removeTaskIndex: taskIndex)
             decIndex()
             updateText()

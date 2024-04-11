@@ -11,7 +11,7 @@ protocol DetailViewControllerDelegate: AnyObject {
     func didUpdate()
 }
 
-class TasksListViewController: UITableViewController, DetailViewControllerDelegate {
+class TasksListViewController: UITableViewController, DetailViewControllerDelegate,  UISearchBarDelegate {
     
     func didUpdate() {
         tableView.reloadData()
@@ -20,9 +20,15 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     
     @IBOutlet var editButton: UIBarButtonItem!
     
-    var profile: DataStore.Profile!
+    @IBOutlet var searchBar: UISearchBar!
     
+    
+    var profile: DataStore.Profile!
     var profileIndex: Int!
+    var searchingNames: [String] = []
+    var searching = false
+    
+    
     @IBAction func editPressed() {
         self.isEditing.toggle()
     }
@@ -32,30 +38,56 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         super.viewDidLoad()
         // Разрешаем пользователю выделять ячейки в режиме редактирования
         //tableView.allowsSelectionDuringEditing = true
-
-        // Отключаем отображение иконки перемещения для ячеек
-        //tableView.setEditing(true, animated: false)
+        
+        //Отключаем отображение иконки перемещения для ячеек
+        // tableView.setEditing(true, animated: false)
         
         title = profile.name
         
-        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized(_:)))
-        self.tableView.addGestureRecognizer(longPress)
-
-
+        searchBar.delegate = self
+        
+        
     }
     
-    @IBAction func longPressGestureRecognized(_ sender: UILongPressGestureRecognizer) {
-        guard let longPress = sender as? UILongPressGestureRecognizer else { return }
-        let state = longPress.state
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        let location = longPress.location(in: self.tableView)
-        let indexPath = self.tableView.indexPathForRow(at: location)
+        var data: [String] = []
         
-        // Продолжение следует...
+        if searchText.isEmpty {
+            searching = false
+        } else {
+ 
+            for indexCategory in 0 ..< profile.categories.count {
+                profile.categories[indexCategory].tasks.forEach {
+                    element in data.append(element.text)
+                }
+            }
+            searchingNames = data.filter (
+                {$0.lowercased().prefix(searchText.count) ==
+                    searchText.lowercased ()})
+            
+            searching = true
+        }
+        tableView.reloadData()
     }
-
     
-    override func viewWillLayoutSubviews() {
+
+    override func viewDidLayoutSubviews() {
+        print(#function)
+        
+        searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
+        
+        searchBar.backgroundImage = UIImage()
+        searchBar.backgroundColor = UIColor.clear
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(#function)
+        searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
+        
+        searchBar.backgroundImage = UIImage()
+        searchBar.backgroundColor = UIColor.clear
+        
         
     }
     
@@ -75,7 +107,7 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
             detailsVC?.taskIndex = indexPath.row
             detailsVC?.profile = profile
             
-            detailsVC?.text = profile.categories[indexPath.section].tasks[indexPath.row].description
+            detailsVC?.text = profile.categories[indexPath.section].tasks[indexPath.row].text
             detailsVC?.delegate = self
         }
     }
@@ -110,11 +142,11 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         // Обновляем только перемещенные строки
         tableView.moveRow(at: sourceIndexPath, to: destIndexPath)
         
-        // Перезагружаем только те секции, где произошли изменения
+        // Перезагружаем только те секции, где произошли /Users/paveld/Documents/Development/ToDoList/ToDoList/TasksListViewController.swiftизменения
         //tableView.reloadSections(IndexSet(arrayLiteral: sourceIndexPath.section, destIndexPath.section), with: .automatic)
     }
-
-
+    
+    
     
     @IBAction func closePressed() {
         dismiss(animated: true)
@@ -123,19 +155,42 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        profile.categories.count
+        
+        if searching {
+            return 1
+        } else {
+            return profile.categories.count
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        profile.categories[section].tasks.count
+        if searching {
+            return searchingNames.count
+        } else {
+            return profile.categories[section].tasks.count
+        }
     }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        40
+    }
+    
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HederTableViewCell
         
         let category =  profile.categories[section]
-        cell?.CategoryLabel.text = category.name
-        
+        if searching {
+            cell?.сategoryLabel.text = "" //"Search results"
+        } else
+        {
+            cell?.сategoryLabel.text = category.name
+        }
         return cell
     }
     
@@ -147,32 +202,41 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         cell.indentationWidth = 0
         cell.indentationLevel = 0
         
-        let task =  profile.categories[indexPath.section].tasks[indexPath.row]
-        
-            cell.backgroundColor = task.ready 
-            ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
-            : .systemBackground
-        
-        
         var content = cell.defaultContentConfiguration()
         content.textProperties.numberOfLines = 1
         content.secondaryTextProperties.numberOfLines = 1
         
-        
-        content.text = String(indexPath.row + 1) + ". " + task.description
-        
-        let substrings = task.description.split(separator: "\n")
-        
-        if substrings.count >= 2 {
-            let substring = substrings[1]
-            content.secondaryText = String(substring)
+        if searching {
+            content.text = searchingNames[indexPath.row]
+            let substrings = searchingNames[indexPath.row].split(separator: "\n")
+            
+            if substrings.count >= 2 {
+                let substring = substrings[1]
+                content.secondaryText = String(substring)
+            }
+        } else
+        {
+            let task = profile.categories[indexPath.section].tasks[indexPath.row]
+            
+            cell.backgroundColor = task.ready
+            ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
+            : .systemBackground
+            
+            content.text = String(indexPath.row + 1) + ". " + task.text
+            
+            let substrings = task.text.split(separator: "\n")
+            
+            if substrings.count >= 2 {
+                let substring = substrings[1]
+                content.secondaryText = String(substring)
+            }
         }
-
+        
         cell.contentConfiguration = content
         
         return cell
     }
-   
+    
 }
 
 

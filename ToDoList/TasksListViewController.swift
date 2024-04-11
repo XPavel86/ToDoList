@@ -50,13 +50,11 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
         var data: [String] = []
         
         if searchText.isEmpty {
             searching = false
         } else {
- 
             for indexCategory in 0 ..< profile.categories.count {
                 profile.categories[indexCategory].tasks.forEach {
                     element in data.append(element.text)
@@ -112,42 +110,33 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         }
     }
     
-    override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
-        //        Возможность взаимодействие с ячейками
-        true
-    }
-    
-    override func tableView(_: UITableView, canMoveRowAt: IndexPath) -> Bool {
-        true
-        //        Определяет можно ли перемещать строки
-    }
+//    override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
+//        //        Возможность взаимодействие с ячейками
+//        true
+//    }
+//    
+//    override func tableView(_: UITableView, canMoveRowAt: IndexPath) -> Bool {
+//        true
+//        //        Определяет можно ли перемещать строки
+//    }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        // Отключаем отображение иконки перемещения
+        
         return .none
     }
     
     
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
-        // Получаем элемент, который мы собираемся переместить
-        let movedTask = profile.categories[sourceIndexPath.section].tasks[sourceIndexPath.row]
-        
-        // Удаляем элемент из исходной секции
+
         let removedTask = profile.categories[sourceIndexPath.section].tasks.remove(at: sourceIndexPath.row)
         
-        // Вставляем элемент в новую секцию
         profile.categories[destIndexPath.section].tasks.insert(removedTask, at: destIndexPath.row)
         
-        // Обновляем только перемещенные строки
-        tableView.moveRow(at: sourceIndexPath, to: destIndexPath)
-        
-        // Перезагружаем только те секции, где произошли /Users/paveld/Documents/Development/ToDoList/ToDoList/TasksListViewController.swiftизменения
-        //tableView.reloadSections(IndexSet(arrayLiteral: sourceIndexPath.section, destIndexPath.section), with: .automatic)
+        tableView.reloadData()
+    
     }
-    
-    
-    
+
     @IBAction func closePressed() {
         dismiss(animated: true)
     }

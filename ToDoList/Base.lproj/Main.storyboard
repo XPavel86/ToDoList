@@ -164,6 +164,21 @@
             </objects>
             <point key="canvasLocation" x="1740.5797101449277" y="-29.347826086956523"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="oeC-OR-bW9">
+            <objects>
+                <viewController id="Gsx-5n-Qaj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6N9-1S-HcC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Tyv-qW-1Wv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zbp-4a-Iiq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1619" y="697"/>
+        </scene>
         <!--Detail View Controller-->
         <scene sceneID="j82-Kw-GEg">
             <objects>
@@ -172,11 +187,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="716"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-cb-k0V" userLabel="BottomMenu">
-                                <rect key="frame" x="34.333333333333343" y="681.33333333333337" width="379.33333333333326" height="34.333333333333371"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-cb-k0V" userLabel="BottomMenu">
+                                <rect key="frame" x="0.0" y="681.33333333333337" width="413.66666666666669" height="34.333333333333371"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgX-di-HnE" userLabel="StatusButton">
-                                        <rect key="frame" x="0.0" y="0.0" width="47.666666666666664" height="34.333333333333336"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="52" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="checkmark" catalog="system"/>
                                         <connections>
@@ -184,7 +199,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xnd-HX-h2K" userLabel="LeftButton">
-                                        <rect key="frame" x="52.666666666666657" y="0.0" width="51" height="34.333333333333336"/>
+                                        <rect key="frame" x="57" y="0.0" width="55.666666666666657" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrowshape.left" catalog="system"/>
                                         <connections>
@@ -192,7 +207,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vdO-Tj-JCa" userLabel="RightButton">
-                                        <rect key="frame" x="108.66666666666666" y="0.0" width="51" height="34.333333333333336"/>
+                                        <rect key="frame" x="117.66666666666667" y="0.0" width="55.333333333333329" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrowshape.right" catalog="system"/>
                                         <connections>
@@ -200,7 +215,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o68-Zb-qlz" userLabel="TrashButton">
-                                        <rect key="frame" x="164.66666666666666" y="0.0" width="48" height="34.333333333333336"/>
+                                        <rect key="frame" x="178" y="0.0" width="52.333333333333343" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
                                         <connections>
@@ -208,7 +223,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pig-LK-83R" userLabel="UndoButton">
-                                        <rect key="frame" x="217.66666666666666" y="0.0" width="49.666666666666657" height="34.333333333333336"/>
+                                        <rect key="frame" x="235.33333333333334" y="0.0" width="54.333333333333343" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrow.uturn.backward" catalog="system"/>
                                         <connections>
@@ -216,7 +231,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67y-uW-Tfj" userLabel="CopyTaskButton">
-                                        <rect key="frame" x="272.33333333333337" y="0.0" width="51.333333333333314" height="34.333333333333336"/>
+                                        <rect key="frame" x="294.66666666666669" y="0.0" width="56" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="doc.on.doc" catalog="system"/>
                                         <connections>
@@ -224,7 +239,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyA-DM-3C9" userLabel="NewTaskButton">
-                                        <rect key="frame" x="328.66666666666669" y="0.0" width="50.666666666666686" height="34.333333333333336"/>
+                                        <rect key="frame" x="355.66666666666669" y="0.0" width="58" height="34.333333333333336"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system"/>
                                         <connections>
@@ -245,6 +260,7 @@
                         <viewLayoutGuide key="safeArea" id="Vqu-BF-CXR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="ncm-cb-k0V" firstAttribute="leading" secondItem="vfu-7e-vkG" secondAttribute="leading" id="3OV-Pm-0Aj"/>
                             <constraint firstItem="UKx-vz-P8A" firstAttribute="leading" secondItem="Vqu-BF-CXR" secondAttribute="leading" constant="16" id="Dpy-DU-mQW"/>
                             <constraint firstItem="ncm-cb-k0V" firstAttribute="top" secondItem="UKx-vz-P8A" secondAttribute="bottom" constant="1.5" id="NYM-wk-6vX"/>
                             <constraint firstAttribute="bottom" secondItem="ncm-cb-k0V" secondAttribute="bottom" constant="0.5" id="OKG-72-H0S" userLabel="bottom = BottomMenu.bottom + 16"/>

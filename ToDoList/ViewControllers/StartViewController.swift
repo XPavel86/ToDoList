@@ -7,12 +7,12 @@
 
 import UIKit
 
-class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+final class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet var usersPickerView: UIPickerView!
     
-    let profiles = DataStore.shared.profiles
-    let dm = DataStore.Manager()
+    private let profiles = DataStore.shared.profiles
+    private let dm = DataStore.Manager()
     
     override func viewDidLoad() {
         super.viewDidLoad()

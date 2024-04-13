@@ -10,33 +10,31 @@ import UIKit
 protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
 }
-//СellDelegate,
-class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+
+final class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
     
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var searchBar: UISearchBar!
     
-    let dm = DataStore.Manager()
+    private let dm = DataStore.Manager()
+    var profile: DataStore.Profile!
     
     weak var delegate: DataDelegate?
     
-    var isNewTask: Bool = false
-
-    var profile: DataStore.Profile!
+    private var isNewTask: Bool = false
     var profileIndex: Int = 0
+    private var selectedSection: Int!
     
-    var selectedSection: Int!
-    
-    var searchingNames: [String] = []
-    var searching = false
+    private var searchingNames: [String] = []
+    private var searching = false
     
 
-    func didUpdate() {
+     func didUpdate() {
         tableView.reloadData()
     }
     
     
-    func didOpenView() {
+    private func didOpenView() {
         isNewTask = true
     }
     
@@ -205,11 +203,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
-            
-            
-            //if traitCollection.userInterfaceStyle == .dark {
-               
-                
+    
             if self.traitCollection.userInterfaceStyle == .dark {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = UIColor.link.cgColor

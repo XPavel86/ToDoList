@@ -160,6 +160,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
         updateText("New")
         textView.text = ""
         isCreate = true
+        
+        textView.becomeFirstResponder()
     }
     
     func saveText() {

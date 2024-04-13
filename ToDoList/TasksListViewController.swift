@@ -7,13 +7,39 @@
 
 import UIKit
 
-protocol DetailViewControllerDelegate: AnyObject {
+protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
 }
 
-class TasksListViewController: UITableViewController, DetailViewControllerDelegate,  UISearchBarDelegate {
+class TasksListViewController: UITableViewController, TasksViewControllerDelegate, СellDelegate, UISearchBarDelegate {
+    
+    let dm = DataStore.Manager()
+    
+    weak var delegate: DataDelegate?
+    
+    var isNewTask: Bool = false
+    
+    func didOpenView() {
+        isNewTask = true
+        
+        let detailsVC = DetailViewController()
+        
+        detailsVC.delegate = self
+        self.delegate = detailsVC
+        
+       // delegate?.sendData(profileIndex, selectedSection, 0, true)
+        detailsVC.profile = profile
+        detailsVC.categoryIndex = selectedSection
+        detailsVC.text = ""
+        detailsVC.isNewTask = true
+        
+        performSegue(withIdentifier: "DetailSegue", sender: self)
+             
+    }
+    
     
     func didUpdate() {
+        
         tableView.reloadData()
     }
     
@@ -25,6 +51,7 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     
     var profile: DataStore.Profile!
     var profileIndex: Int!
+    var selectedSection: Int!
     var searchingNames: [String] = []
     var searching = false
     
@@ -43,11 +70,10 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         // tableView.setEditing(true, animated: false)
         
         title = profile.name
-        
         searchBar.delegate = self
-        
-        
     }
+    
+    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var data: [String] = []
@@ -69,10 +95,8 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         tableView.reloadData()
     }
     
-
+    
     override func viewDidLayoutSubviews() {
-        print(#function)
-        
         searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
         
         searchBar.backgroundImage = UIImage()
@@ -80,7 +104,6 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(#function)
         searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
         
         searchBar.backgroundImage = UIImage()
@@ -96,29 +119,41 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print(#function)
+        guard let detailsVC = segue.destination as? DetailViewController else {return}
         
-        if let indexPath = tableView.indexPathForSelectedRow {
-            let detailsVC = segue.destination as? DetailViewController
-            
-            detailsVC?.profileIndex = profileIndex
-            detailsVC?.section = indexPath.section
-            detailsVC?.taskIndex = indexPath.row
-            detailsVC?.profile = profile
-            
-            detailsVC?.text = profile.categories[indexPath.section].tasks[indexPath.row].text
-            detailsVC?.delegate = self
+        if segue.identifier == "DetailSegue" && !isNewTask {
+            if let indexPath = tableView.indexPathForSelectedRow
+            {
+                detailsVC.delegate = self
+                self.delegate = detailsVC
+                delegate?.sendData(profileIndex, indexPath.section, indexPath.row, false)
+
+                detailsVC.text = profile.categories[indexPath.section].tasks[indexPath.row].text
+                detailsVC.profile = profile
+                
+            }
         }
+        else if segue.identifier == "CategorySegue" {
+            let categoryVC = segue.destination as? CategoryViewController
+            categoryVC?.indexProfile = profileIndex
+            
+        }
+        
+        
+        
+        //newTask = false
     }
     
-//    override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
-//        //        Возможность взаимодействие с ячейками
-//        true
-//    }
-//    
-//    override func tableView(_: UITableView, canMoveRowAt: IndexPath) -> Bool {
-//        true
-//        //        Определяет можно ли перемещать строки
-//    }
+    //    override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
+    //        //        Возможность взаимодействие с ячейками
+    //        true
+    //    }
+    //
+    //    override func tableView(_: UITableView, canMoveRowAt: IndexPath) -> Bool {
+    //        true
+    //        //        Определяет можно ли перемещать строки
+    //    }
     
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
@@ -128,15 +163,15 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
-
+        
         let removedTask = profile.categories[sourceIndexPath.section].tasks.remove(at: sourceIndexPath.row)
         
         profile.categories[destIndexPath.section].tasks.insert(removedTask, at: destIndexPath.row)
         
         tableView.reloadData()
-    
+        
     }
-
+    
     @IBAction func closePressed() {
         dismiss(animated: true)
     }
@@ -148,7 +183,7 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         if searching {
             return 1
         } else {
-            return profile.categories.count
+            return dm.getCountCategories(index: profileIndex) //profile.categories.count
         }
     }
     
@@ -156,13 +191,13 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
         if searching {
             return searchingNames.count
         } else {
-            return profile.categories[section].tasks.count
+            return dm.getCountTasks(profileIndex: profileIndex, categoryIndex: section)
         }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 50
+        50
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -171,18 +206,30 @@ class TasksListViewController: UITableViewController, DetailViewControllerDelega
     
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HederTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HeaderTableViewCell
+        
+        cell?.delegate = self
+        
+        cell?.buttonAction = { [weak self] in
+            self?.buttonPressed(inSection: section)
+        }
         
         let category =  profile.categories[section]
         if searching {
-            cell?.сategoryLabel.text = "" //"Search results"
+            cell?.isHidden = true
         } else
         {
+            cell?.isHidden = false
             cell?.сategoryLabel.text = category.name
         }
         return cell
     }
     
+    
+    func buttonPressed(inSection section: Int) {
+        selectedSection = section
+        print("buttonPressed \(selectedSection ?? 0)")
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

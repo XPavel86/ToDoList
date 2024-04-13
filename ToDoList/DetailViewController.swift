@@ -7,32 +7,59 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITextViewDelegate {
+protocol DataDelegate: AnyObject {
+    func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool)
     
+}
+
+class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
+   
     @IBOutlet var textView: UITextView!
+
+    weak var delegate: TasksViewControllerDelegate?
     
-    weak var delegate: DetailViewControllerDelegate?
+     var categoryIndex: Int!
+     var profileIndex: Int!
+    private var taskIndex: Int = 0
+     var text: String!
     
-    var section: Int!
-    var profileIndex: Int!
-    var taskIndex: Int!
-    var text: String!
-    
-    let pm = DataStore.Manager()
+    private let dm = DataStore.Manager()
     var profile: DataStore.Profile!
     
-    var previousText: String?
-    var isCreate = false
-    var changeText = false
+    private var previousText: String?
+    private var isCreate = false
+     var isNewTask = false
+    private var changeText = false
+    
+    func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
+        
+        self.profileIndex = profileIndex
+        self.categoryIndex = categoryIndex
+        self.taskIndex = taskIndex
+        self.isNewTask = isNewTask
+        print("Detail \(#function) \(taskIndex) \(isNewTask)")
+        
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("\(#function) \(isNewTask)")
         
         textView.delegate = self
         
         previousText = text
-        updateText()
+        
+       updateText()
+        
+        
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("\(#function) \(isNewTask)")
+    }
+    
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         changeText = true
@@ -42,7 +69,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     override func viewWillLayoutSubviews() {
         super.viewDidLoad()
-        
+
         changeColor()
     }
     
@@ -51,6 +78,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         saveText()
         delegate?.didUpdate()
+       
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -92,28 +120,30 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     func updateText(_ textTitle: String = "") {
-        let count = profile.categories[section].tasks.count
+        guard !isNewTask else { return }
+        guard let profIndex = profileIndex else {return}
+        let count = dm.getCountTasks(profileIndex: profIndex, categoryIndex: categoryIndex)
         
         var afterTitle = "\(taskIndex + 1 )/\(count)"
         
         if !textTitle.isEmpty {
             afterTitle = textTitle
         }
-        title = "\(profile.categories[section].name) \(afterTitle)"
+        title = "\(profile.categories[categoryIndex].name) \(afterTitle)"
         
-        if profile.categories[section].tasks.isEmpty {
+        if profile.categories[categoryIndex].tasks.isEmpty {
             title = "No tasks"
             textView.text = ""
         } else  {
-            textView.text = profile.categories[section].tasks[taskIndex].text
+            textView.text = profile.categories[categoryIndex].tasks[taskIndex].text
         }
     }
     
     
     @IBAction func copyTaskButton() {
         if !textView.text.isEmpty {
-            pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
-            taskIndex = profile.categories[section].tasks.count - 1
+            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text)
+            taskIndex = profile.categories[categoryIndex].tasks.count - 1
             
             updateText()
         }
@@ -130,12 +160,12 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     func saveText() {
          
         if !textView.text.isEmpty && previousText != textView.text && changeText && !isCreate {
-                pm.changeTaskDescription(profileIndex: profileIndex, categoryIndex: section, taskIndex: taskIndex, newDescription: textView.text)
+                dm.changeTaskDescription(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex, newDescription: textView.text)
                 print("saveChange")
             }
 
         if !textView.text.isEmpty && isCreate {
-            pm.addTask(profileIndex: profileIndex, categoryIndex: section, newDescription: textView.text)
+            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text)
             incIndex()
             print("isCreate")
         }
@@ -146,15 +176,16 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func changeStatusTask() {
-        if !profile.categories[section].tasks.isEmpty {
-            profile.categories[section].tasks[taskIndex].ready.toggle()
+        if !profile.categories[categoryIndex].tasks.isEmpty {
+            profile.categories[categoryIndex].tasks[taskIndex].ready.toggle()
             changeColor()
         }
     }
     
      func changeColor() {
-         if !profile.categories[section].tasks.isEmpty {
-             view.backgroundColor = profile.categories[section].tasks[taskIndex].ready
+         guard !isNewTask else { return }
+         if !profile.categories[categoryIndex].tasks.isEmpty {
+             view.backgroundColor = profile.categories[categoryIndex].tasks[taskIndex].ready
              ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
              : .systemBackground
              
@@ -163,15 +194,15 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     }
     
     func deleteTask() {
-        if !textView.text.isEmpty && !profile.categories[section].tasks.isEmpty {
-            pm.removeTask(profileIndex: profileIndex, categoryIndex: section, removeTaskIndex: taskIndex)
+        if !textView.text.isEmpty && !profile.categories[categoryIndex].tasks.isEmpty {
+            dm.removeTask(profileIndex: profileIndex, categoryIndex: categoryIndex, removeTaskIndex: taskIndex)
             decIndex()
             updateText()
         }
     }
     
     func incIndex() {
-        if taskIndex < profile.categories[section].tasks.count - 1 {
+        if taskIndex < profile.categories[categoryIndex].tasks.count - 1 {
             taskIndex += 1
         }
     }

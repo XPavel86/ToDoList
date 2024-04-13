@@ -9,7 +9,7 @@ import UIKit
 
 class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    @IBOutlet var userTextField: UITextField!
+    //@IBOutlet var userTextField: UITextField!
     @IBOutlet var usersPickerView: UIPickerView!
     
     @IBAction func addProfile() {
@@ -29,13 +29,13 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         usersPickerView?.delegate = self
         usersPickerView?.dataSource = self
         
-        if profiles.isEmpty {
-            usersPickerView.isHidden = true
-            userTextField.isHidden = false
-        } else {
-            userTextField.isHidden = true
-            usersPickerView.isHidden = false
-        }
+//        if profiles.isEmpty {
+//            usersPickerView.isHidden = true
+//            userTextField.isHidden = false
+//        } else {
+//            userTextField.isHidden = true
+//            usersPickerView.isHidden = false
+//        }
     }
     
     func numberOfComponents (in pickerView: UIPickerView) -> Int {

@@ -7,19 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EF29C9D32BC9987B00AD5B45 /* DataDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF29C9D22BC9987B00AD5B45 /* DataDelegate.swift */; };
+		EF368D552BC84DDF00E0EA71 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */; };
 		EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E1792BB85DD0000530A0 /* AppDelegate.swift */; };
 		EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */; };
 		EF60E17E2BB85DD0000530A0 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E17D2BB85DD0000530A0 /* StartViewController.swift */; };
 		EF60E1812BB85DD0000530A0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF60E17F2BB85DD0000530A0 /* Main.storyboard */; };
 		EF60E1832BB85DD2000530A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF60E1822BB85DD2000530A0 /* Assets.xcassets */; };
 		EF60E1862BB85DD2000530A0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */; };
+		EF73CBDE2BC86B120049B104 /* EditCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF73CBDD2BC86B120049B104 /* EditCategoryViewController.swift */; };
 		EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */; };
-		EF8371BC2BB9C08500FBCC38 /* HederTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */; };
+		EF8371BC2BB9C08500FBCC38 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */; };
 		EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9072112BBD42CD008252B0 /* DetailViewController.swift */; };
 		EFC839482BC3F6250004E87A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC839472BC3F6250004E87A /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		EF29C9D22BC9987B00AD5B45 /* DataDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataDelegate.swift; sourceTree = "<group>"; };
+		EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		EF60E1762BB85DD0000530A0 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60E1792BB85DD0000530A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,8 +33,9 @@
 		EF60E1822BB85DD2000530A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EF60E1852BB85DD2000530A0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EF60E1872BB85DD2000530A0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EF73CBDD2BC86B120049B104 /* EditCategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCategoryViewController.swift; sourceTree = "<group>"; };
 		EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListViewController.swift; sourceTree = "<group>"; };
-		EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HederTableViewCell.swift; sourceTree = "<group>"; };
+		EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		EF9072112BBD42CD008252B0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EFC839472BC3F6250004E87A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,8 +75,11 @@
 				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
 				EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */,
-				EF8371BB2BB9C08500FBCC38 /* HederTableViewCell.swift */,
+				EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */,
 				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,
+				EF29C9D22BC9987B00AD5B45 /* DataDelegate.swift */,
+				EF73CBDD2BC86B120049B104 /* EditCategoryViewController.swift */,
+				EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */,
 				EF60E17F2BB85DD0000530A0 /* Main.storyboard */,
 				EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */,
 				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
@@ -160,9 +169,12 @@
 			files = (
 				EF60E17E2BB85DD0000530A0 /* StartViewController.swift in Sources */,
 				EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */,
+				EF29C9D32BC9987B00AD5B45 /* DataDelegate.swift in Sources */,
 				EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */,
 				EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */,
-				EF8371BC2BB9C08500FBCC38 /* HederTableViewCell.swift in Sources */,
+				EF368D552BC84DDF00E0EA71 /* CategoryViewController.swift in Sources */,
+				EF8371BC2BB9C08500FBCC38 /* HeaderTableViewCell.swift in Sources */,
+				EF73CBDE2BC86B120049B104 /* EditCategoryViewController.swift in Sources */,
 				EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */,
 				EFC839482BC3F6250004E87A /* DataStore.swift in Sources */,
 			);

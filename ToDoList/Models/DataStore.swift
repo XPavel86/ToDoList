@@ -111,14 +111,15 @@ final class DataStore {
         }
         
         func renameCategory(profileIndex: Int, index: Int, newName: String) {
-            if !dataStore.profiles[profileIndex].categories.contains(where: { $0.name == newName }) {
                 dataStore.profiles[profileIndex].categories[index].name = newName
-                observer?.categoryDidСhanged()
-            }
         }
         
-        func getCategories(profileIndex: Int) -> [DataStore.Category] {
-            return dataStore.profiles[profileIndex].categories
+        func getNameCategory(profileIndex: Int, categoryIndex: Int) -> String {
+            return dataStore.profiles[profileIndex].categories[categoryIndex].name
+        }
+        
+        func getCountCategories(index: Int) -> Int {
+            return dataStore.profiles[index].categories.count
         }
         
         // Working with tasks
@@ -148,6 +149,10 @@ final class DataStore {
         
         func getTasks(profileIndex: Int, categoryIndex: Int) -> [DataStore.Task] {
             return dataStore.profiles[profileIndex].categories[categoryIndex].tasks
+        }
+        
+        func getCountTasks(profileIndex: Int, categoryIndex: Int) -> Int {
+             dataStore.profiles[profileIndex].categories[categoryIndex].tasks.count
         }
     }
     

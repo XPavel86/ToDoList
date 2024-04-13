@@ -1,16 +1,15 @@
 //
-//  HederTableViewCell.swift
+//  CategoryTableViewCell.swift
 //  ToDoList
 //
-//  Created by Pavel Dolgopolov on 31.03.2024.
+//  Created by Pavel Dolgopolov on 11.04.2024.
 //
 
 import UIKit
 
-class HederTableViewCell: UITableViewCell {
-    
-    @IBOutlet var сategoryLabel: UILabel!
-    
+class CategoryTableViewCell: UITableViewCell {
+
+    @IBOutlet var textField: UITextField!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

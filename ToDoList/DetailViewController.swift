@@ -18,40 +18,34 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
 
     weak var delegate: TasksViewControllerDelegate?
     
-     var categoryIndex: Int!
-     var profileIndex: Int!
+    private var categoryIndex: Int!
+    private var profileIndex: Int!
     private var taskIndex: Int = 0
-     var text: String!
+    private var isNewTask: Bool = false
     
-    private let dm = DataStore.Manager()
-    var profile: DataStore.Profile!
+    let dm = DataStore.Manager()
     
-    private var previousText: String?
+    private var previousText: String = ""
     private var isCreate = false
-     var isNewTask = false
     private var changeText = false
     
     func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
-        
         self.profileIndex = profileIndex
         self.categoryIndex = categoryIndex
         self.taskIndex = taskIndex
         self.isNewTask = isNewTask
-        print("Detail \(#function) \(taskIndex) \(isNewTask)")
-        
         }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\(#function) \(isNewTask)")
-        
+
         textView.delegate = self
         
-        previousText = text
+        if !isNewTask {
+            previousText = dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).text
+        }
         
-       updateText()
-        
-        
+        updateText()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -120,7 +114,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func updateText(_ textTitle: String = "") {
-        guard !isNewTask else { return }
+        guard !isNewTask else {
+            textView.text = "Новая заметка"
+            textView.becomeFirstResponder()
+            self.textView.selectAll(nil)
+            return
+        }
+        
         guard let profIndex = profileIndex else {return}
         let count = dm.getCountTasks(profileIndex: profIndex, categoryIndex: categoryIndex)
         
@@ -129,21 +129,24 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
         if !textTitle.isEmpty {
             afterTitle = textTitle
         }
-        title = "\(profile.categories[categoryIndex].name) \(afterTitle)"
+        title = "\(dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).name) \(afterTitle)"
         
-        if profile.categories[categoryIndex].tasks.isEmpty {
+        if dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
             title = "No tasks"
             textView.text = ""
         } else  {
-            textView.text = profile.categories[categoryIndex].tasks[taskIndex].text
+            textView.text = dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).text
         }
     }
     
     
     @IBAction func copyTaskButton() {
+        guard !isNewTask else { return }
         if !textView.text.isEmpty {
-            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text)
-            taskIndex = profile.categories[categoryIndex].tasks.count - 1
+            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text) {
+                self.isNewTask = false
+            }
+            taskIndex = dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).count
             
             updateText()
         }
@@ -159,16 +162,21 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     func saveText() {
          
-        if !textView.text.isEmpty && previousText != textView.text && changeText && !isCreate {
-                dm.changeTaskDescription(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex, newDescription: textView.text)
-                print("saveChange")
+        guard !textView.text.isEmpty else { return }
+        
+        if previousText != textView.text && changeText && !isCreate && !isNewTask {
+            dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).text = textView.text
+            print("saveChange")
             }
 
-        if !textView.text.isEmpty && isCreate {
-            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text)
+        if isCreate || isNewTask {
+            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text) {
+                self.isNewTask = false
+            }
             incIndex()
             print("isCreate")
         }
+        
         isCreate = false
         changeText = false
         
@@ -176,16 +184,17 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     @IBAction func changeStatusTask() {
-        if !profile.categories[categoryIndex].tasks.isEmpty {
-            profile.categories[categoryIndex].tasks[taskIndex].ready.toggle()
+        guard !isNewTask else { return }
+        if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
+            dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready.toggle()
             changeColor()
         }
     }
     
      func changeColor() {
          guard !isNewTask else { return }
-         if !profile.categories[categoryIndex].tasks.isEmpty {
-             view.backgroundColor = profile.categories[categoryIndex].tasks[taskIndex].ready
+         if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
+             view.backgroundColor = dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready
              ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
              : .systemBackground
              
@@ -194,7 +203,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func deleteTask() {
-        if !textView.text.isEmpty && !profile.categories[categoryIndex].tasks.isEmpty {
+        if !textView.text.isEmpty && !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
             dm.removeTask(profileIndex: profileIndex, categoryIndex: categoryIndex, removeTaskIndex: taskIndex)
             decIndex()
             updateText()
@@ -202,7 +211,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func incIndex() {
-        if taskIndex < profile.categories[categoryIndex].tasks.count - 1 {
+        if taskIndex < dm.getCategories(profileIndex: profileIndex).count - 1 {
             taskIndex += 1
         }
     }

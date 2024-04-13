@@ -7,27 +7,27 @@
 
 import UIKit
 
-protocol СellDelegate: AnyObject {
-    func didOpenView()
-}
+//protocol СellDelegate: AnyObject {
+//    func didOpenView()
+//}
 
 class HeaderTableViewCell: UITableViewCell {
     var buttonAction: (() -> ())?
 
-    weak var delegate: СellDelegate?
+   // weak var delegate: СellDelegate?
    
     @IBOutlet var сategoryLabel: UILabel!
     
     @IBOutlet var addButton: UIButton!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-      
-    }
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//      
+//    }
     
     @IBAction func addTaskPressed() {
         buttonAction?()
-        delegate?.didOpenView()
+       // delegate?.didOpenView()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

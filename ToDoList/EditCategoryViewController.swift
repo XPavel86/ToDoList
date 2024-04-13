@@ -12,12 +12,14 @@ class EditCategoryViewController: UIViewController {
     weak var delegate: CategoryViewControllerDelegate?
     
     var isSave: Bool = false
-    var categoryName: String!
+    var categoryName: String?
     
     @IBOutlet var textField: UITextField!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        textField.becomeFirstResponder()
         textField.text = categoryName
     }
     

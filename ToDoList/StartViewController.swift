@@ -9,33 +9,15 @@ import UIKit
 
 class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    //@IBOutlet var userTextField: UITextField!
     @IBOutlet var usersPickerView: UIPickerView!
     
-    @IBAction func addProfile() {
-
-    }
-    
     let profiles = DataStore.shared.profiles
+    let dm = DataStore.Manager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        
-    }
-    
-    override func viewWillLayoutSubviews() {
-        
         usersPickerView?.delegate = self
         usersPickerView?.dataSource = self
-        
-//        if profiles.isEmpty {
-//            usersPickerView.isHidden = true
-//            userTextField.isHidden = false
-//        } else {
-//            userTextField.isHidden = true
-//            usersPickerView.isHidden = false
-//        }
     }
     
     func numberOfComponents (in pickerView: UIPickerView) -> Int {
@@ -43,11 +25,11 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        profiles.count
+        dm.getProfiles().count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        profiles[row].name
+        dm.getProfile(at: row).name
     }
     
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -63,8 +45,6 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         performSegue(withIdentifier: "segueTasks", sender: self)
-
     }
-
 }
 

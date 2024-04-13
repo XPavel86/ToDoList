@@ -10,51 +10,35 @@ import UIKit
 protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
 }
-
-class TasksListViewController: UITableViewController, TasksViewControllerDelegate, СellDelegate, UISearchBarDelegate {
+//СellDelegate,
+class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+    
+    @IBOutlet var editButton: UIBarButtonItem!
+    @IBOutlet var searchBar: UISearchBar!
     
     let dm = DataStore.Manager()
     
     weak var delegate: DataDelegate?
     
     var isNewTask: Bool = false
+
+    var profile: DataStore.Profile!
+    var profileIndex: Int = 0
     
-    func didOpenView() {
-        isNewTask = true
-        
-        let detailsVC = DetailViewController()
-        
-        detailsVC.delegate = self
-        self.delegate = detailsVC
-        
-       // delegate?.sendData(profileIndex, selectedSection, 0, true)
-        detailsVC.profile = profile
-        detailsVC.categoryIndex = selectedSection
-        detailsVC.text = ""
-        detailsVC.isNewTask = true
-        
-        performSegue(withIdentifier: "DetailSegue", sender: self)
-             
-    }
+    var selectedSection: Int!
     
+    var searchingNames: [String] = []
+    var searching = false
     
+
     func didUpdate() {
-        
         tableView.reloadData()
     }
     
     
-    @IBOutlet var editButton: UIBarButtonItem!
-    
-    @IBOutlet var searchBar: UISearchBar!
-    
-    
-    var profile: DataStore.Profile!
-    var profileIndex: Int!
-    var selectedSection: Int!
-    var searchingNames: [String] = []
-    var searching = false
-    
+    func didOpenView() {
+       
+    }
     
     @IBAction func editPressed() {
         self.isEditing.toggle()
@@ -63,13 +47,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Разрешаем пользователю выделять ячейки в режиме редактирования
-        //tableView.allowsSelectionDuringEditing = true
-        
-        //Отключаем отображение иконки перемещения для ячеек
-        // tableView.setEditing(true, animated: false)
-        
-        title = profile.name
+        title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
     }
     
@@ -81,15 +59,13 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         if searchText.isEmpty {
             searching = false
         } else {
-            for indexCategory in 0 ..< profile.categories.count {
-                profile.categories[indexCategory].tasks.forEach {
+            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
+                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
                     element in data.append(element.text)
                 }
             }
-            searchingNames = data.filter (
-                {$0.lowercased().prefix(searchText.count) ==
-                    searchText.lowercased ()})
-            
+            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
+
             searching = true
         }
         tableView.reloadData()
@@ -103,58 +79,39 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         searchBar.backgroundColor = UIColor.clear
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
-        
-        searchBar.backgroundImage = UIImage()
-        searchBar.backgroundColor = UIColor.clear
-        
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-    }
-    
-    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print(#function)
-        guard let detailsVC = segue.destination as? DetailViewController else {return}
         
-        if segue.identifier == "DetailSegue" && !isNewTask {
+        
+        if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
+            guard let detailsVC = segue.destination as? DetailViewController else { return }
+            
             if let indexPath = tableView.indexPathForSelectedRow
             {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
-                delegate?.sendData(profileIndex, indexPath.section, indexPath.row, false)
-
-                detailsVC.text = profile.categories[indexPath.section].tasks[indexPath.row].text
-                detailsVC.profile = profile
                 
+                delegate?.sendData(profileIndex, indexPath.section, indexPath.row, false)
+                //detailsVC.text = profile.categories[indexPath.section].tasks[indexPath.row].text
+                //detailsVC.profile = profile
+            } else {
+                detailsVC.delegate = self
+                self.delegate = detailsVC
+                
+                delegate?.sendData(profileIndex, selectedSection, 0, true)
+//                detailsVC.text = ""
+//                detailsVC.profile = profile
             }
         }
         else if segue.identifier == "CategorySegue" {
-            let categoryVC = segue.destination as? CategoryViewController
-            categoryVC?.indexProfile = profileIndex
+            guard let categoryVC = segue.destination as? CategoryViewController else {return}
             
+            categoryVC.profileIndex = profileIndex
+            categoryVC.delegate = self
         }
-        
-        
-        
-        //newTask = false
+        isNewTask = false
     }
-    
-    //    override func tableView(_: UITableView, canEditRowAt: IndexPath) -> Bool {
-    //        //        Возможность взаимодействие с ячейками
-    //        true
-    //    }
-    //
-    //    override func tableView(_: UITableView, canMoveRowAt: IndexPath) -> Bool {
-    //        true
-    //        //        Определяет можно ли перемещать строки
-    //    }
-    
+ 
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         
         return .none
@@ -183,7 +140,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         if searching {
             return 1
         } else {
-            return dm.getCountCategories(index: profileIndex) //profile.categories.count
+            return dm.getCategories(profileIndex: profileIndex).count
         }
     }
     
@@ -208,7 +165,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HeaderTableViewCell
         
-        cell?.delegate = self
+       // cell?.delegate = self
         
         cell?.buttonAction = { [weak self] in
             self?.buttonPressed(inSection: section)
@@ -228,7 +185,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     
     func buttonPressed(inSection section: Int) {
         selectedSection = section
-        print("buttonPressed \(selectedSection ?? 0)")
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

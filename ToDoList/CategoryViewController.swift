@@ -12,62 +12,76 @@ protocol CategoryViewControllerDelegate: AnyObject {
 }
 
 final class CategoryViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CategoryViewControllerDelegate {
+    
+    weak var delegate: TasksViewControllerDelegate?
    
     @IBOutlet var textField: UITextField!
     @IBOutlet var tableView: UITableView!
     
+    var profileIndex: Int!
     var indexCategory: Int = 0
-    let dm = DataStore.Manager()
     
-    private var categories: [DataStore.Category]!
+    private var previousText: String?
     
-    var indexProfile: Int! {
-        didSet {
-            categories = DataStore.shared.profiles[indexProfile].categories
-        }
-    }
+    private let dm = DataStore.Manager()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     @IBAction func canceledOrAddPressed(sender: UIButton) {
         guard let text = textField.text else { return }
         
         if sender.tag == 0 {
             dismiss(animated: true)
-        } else if !text.isEmpty {
-            dm.addCategory(profileIndex: indexProfile, categoryName: text)
+        } else if !text.isEmpty && previousText != textField.text {
+            dm.addCategory(profileIndex: profileIndex, categoryName: text)
             tableView.reloadData()
+            
+            let dataCount = dm.getCategories(profileIndex: profileIndex).count
+            let indexPath = IndexPath(row: dataCount - 1, section: 0)
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+
+            previousText = textField.text
         }
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear (animated)
+
+        delegate?.didUpdate()
+    }
+    
     func didUpdate(_ text: String) {
-        dm.renameCategory(profileIndex: indexProfile, index: indexCategory, newName: text)
+        dm.renameCategory(profileIndex: profileIndex, index: indexCategory, newName: text)
         tableView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        textField.becomeFirstResponder()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.textField.selectAll(nil)
+        }
+    }
+
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
             let editCategoryVC = segue.destination as? EditCategoryViewController
-            let name = dm.getNameCategory(profileIndex: indexProfile, categoryIndex: indexPath.row)
+            let name = dm.getCategory(profileIndex: profileIndex, categoryIndex: indexPath.row).name
             editCategoryVC?.categoryName = name
             editCategoryVC?.delegate = self
             indexCategory = indexPath.row
         }
     }
     
-
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         dm.getCountCategories(index: indexProfile)
+        dm.getCategories(profileIndex: profileIndex).count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
         
-        let name = dm.getNameCategory(profileIndex: indexProfile, categoryIndex: indexPath.row)
+        let name = dm.getCategory(profileIndex: profileIndex, categoryIndex: indexPath.row).name
 
         var content = cell.defaultContentConfiguration()
         content.text = name
@@ -78,3 +92,4 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
         return cell
     }
 }
+

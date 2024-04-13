@@ -26,6 +26,7 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
     private let dm = DataStore.Manager()
 
     @IBAction func canceledOrAddPressed(sender: UIButton) {
+        endEditing()
         guard let text = textField.text else { return }
         
         if sender.tag == 0 {

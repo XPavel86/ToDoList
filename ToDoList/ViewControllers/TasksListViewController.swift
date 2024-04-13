@@ -211,9 +211,10 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
                
                 
             if self.traitCollection.userInterfaceStyle == .dark {
-                cell.layer.borderColor = UIColor.link.cgColor // Синий цвет для темной темы
-             } else {
-                cell.layer.borderColor = UIColor.gray.cgColor // Серый цвет для светлой темы
+                cell.layer.borderWidth = 1
+                cell.layer.borderColor = UIColor.link.cgColor
+            } else {
+                cell.layer.borderColor = UIColor.gray.cgColor
              }
 
             content.text = String(indexPath.row + 1) + ". " + task.text
@@ -235,6 +236,15 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         cell.contentConfiguration = content
         
         return cell
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        hideKeyboard()
+    }
+    
+    private func hideKeyboard() {
+        view.endEditing(true)
     }
     
    

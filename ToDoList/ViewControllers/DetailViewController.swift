@@ -9,7 +9,6 @@ import UIKit
 
 protocol DataDelegate: AnyObject {
     func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool)
-    
 }
 
 class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
@@ -98,6 +97,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     @IBAction func saveButton() {
+        endEditing() 
         saveText()
     }
     
@@ -117,7 +117,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     func updateText(_ textTitle: String = "") {
         guard !isNewTask else {
-            textView.text = "Новая заметка/задача"
+            textView.text = "Новая заметка"
             textView.becomeFirstResponder()
             self.textView.selectAll(nil)
             return

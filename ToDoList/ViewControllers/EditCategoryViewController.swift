@@ -35,7 +35,9 @@ class EditCategoryViewController: UIViewController {
         isSave = sender.tag == 0
         ? false
         : true
-
+        
+        endEditing()
         dismiss(animated: true)
     }
+    
 }

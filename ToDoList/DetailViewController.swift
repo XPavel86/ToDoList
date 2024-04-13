@@ -15,7 +15,8 @@ protocol DataDelegate: AnyObject {
 class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
    
     @IBOutlet var textView: UITextView!
-
+    @IBOutlet var checkImageView: UIImageView!
+    
     weak var delegate: TasksViewControllerDelegate?
     
     private var categoryIndex: Int!
@@ -39,7 +40,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        checkImageView.isHidden = true
+        
         textView.delegate = self
         
         if !isNewTask {
@@ -196,15 +198,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
         }
     }
     
-     func changeColor() {
-         guard !isNewTask else { return }
-         if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
-             view.backgroundColor = dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready
-             ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
-             : .systemBackground
-             
-             textView.backgroundColor = view.backgroundColor
-         }
+    func changeColor() {
+        guard !isNewTask else { return }
+        if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
+            checkImageView.isHidden = !dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready
+        }
     }
     
     func deleteTask() {

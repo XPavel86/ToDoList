@@ -53,7 +53,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="68" y="-73"/>
+            <point key="canvasLocation" x="75" y="-30"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="pY3-2u-qfe">
@@ -112,7 +112,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="qep-pa-wsR" detailTextLabel="LVY-P0-2e0" style="IBUITableViewCellStyleSubtitle" id="hQt-Cp-sNG">
                                 <rect key="frame" x="16" y="137.5" width="288" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hQt-Cp-sNG" id="Grw-h2-dZT">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hQt-Cp-sNG" id="Grw-h2-dZT" customClass="TableViewCell" customModule="ToDoList" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -347,7 +347,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ncm-cb-k0V" userLabel="BottomMenu">
-                                <rect key="frame" x="0.0" y="513.5" width="319.5" height="34"/>
+                                <rect key="frame" x="0.0" y="514" width="320" height="34"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgX-di-HnE" userLabel="StatusButton">
                                         <rect key="frame" x="0.0" y="0.0" width="40" height="34"/>
@@ -374,7 +374,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o68-Zb-qlz" userLabel="TrashButton">
-                                        <rect key="frame" x="141" y="0.0" width="40.5" height="34"/>
+                                        <rect key="frame" x="141" y="0.0" width="41" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
                                         <connections>
@@ -382,7 +382,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pig-LK-83R" userLabel="UndoButton">
-                                        <rect key="frame" x="186.5" y="0.0" width="41.5" height="34"/>
+                                        <rect key="frame" x="187" y="0.0" width="41.5" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="arrow.uturn.backward" catalog="system"/>
                                         <connections>
@@ -390,7 +390,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="67y-uW-Tfj" userLabel="CopyTaskButton">
-                                        <rect key="frame" x="233" y="0.0" width="43" height="34"/>
+                                        <rect key="frame" x="233.5" y="0.0" width="43" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="doc.on.doc" catalog="system"/>
                                         <connections>
@@ -398,7 +398,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyA-DM-3C9" userLabel="NewTaskButton">
-                                        <rect key="frame" x="281" y="0.0" width="38.5" height="34"/>
+                                        <rect key="frame" x="281.5" y="0.0" width="38.5" height="34"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="square.and.pencil" catalog="system"/>
                                         <connections>
@@ -408,24 +408,32 @@
                                 </subviews>
                             </stackView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UKx-vz-P8A" userLabel="TextView">
-                                <rect key="frame" x="16" y="114.5" width="288" height="397.5"/>
+                                <rect key="frame" x="16" y="120.5" width="288" height="391.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="2qQ-76-aRp">
+                                <rect key="frame" x="16" y="122.5" width="288" height="359"/>
+                                <color key="tintColor" systemColor="systemGreenColor"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Vqu-BF-CXR"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ncm-cb-k0V" firstAttribute="leading" secondItem="vfu-7e-vkG" secondAttribute="leading" id="3OV-Pm-0Aj"/>
-                            <constraint firstItem="UKx-vz-P8A" firstAttribute="leading" secondItem="Vqu-BF-CXR" secondAttribute="leading" constant="16" id="Dpy-DU-mQW"/>
-                            <constraint firstItem="ncm-cb-k0V" firstAttribute="top" secondItem="UKx-vz-P8A" secondAttribute="bottom" constant="1.5" id="NYM-wk-6vX"/>
-                            <constraint firstAttribute="bottom" secondItem="ncm-cb-k0V" secondAttribute="bottom" constant="0.5" id="OKG-72-H0S" userLabel="bottom = BottomMenu.bottom + 16"/>
-                            <constraint firstAttribute="trailing" secondItem="ncm-cb-k0V" secondAttribute="trailing" constant="0.5" id="VPQ-jp-mEN" userLabel="trailing = BottomMenu.trailing + 16"/>
-                            <constraint firstItem="Vqu-BF-CXR" firstAttribute="trailing" secondItem="UKx-vz-P8A" secondAttribute="trailing" constant="16" id="ZE8-eN-5cD"/>
-                            <constraint firstItem="UKx-vz-P8A" firstAttribute="top" secondItem="Vqu-BF-CXR" secondAttribute="top" constant="10" id="xBa-5O-WOc"/>
+                            <constraint firstItem="ncm-cb-k0V" firstAttribute="top" secondItem="UKx-vz-P8A" secondAttribute="bottom" constant="2" id="00K-1i-OOP"/>
+                            <constraint firstAttribute="trailing" secondItem="ncm-cb-k0V" secondAttribute="trailing" id="3XW-hY-waT"/>
+                            <constraint firstItem="Vqu-BF-CXR" firstAttribute="trailing" secondItem="2qQ-76-aRp" secondAttribute="trailing" constant="16" id="Bos-Sx-rII"/>
+                            <constraint firstItem="2qQ-76-aRp" firstAttribute="leading" secondItem="Vqu-BF-CXR" secondAttribute="leading" constant="16" id="Oap-fO-eEO"/>
+                            <constraint firstItem="2qQ-76-aRp" firstAttribute="top" secondItem="Vqu-BF-CXR" secondAttribute="top" constant="16" id="USL-Ix-Z9w"/>
+                            <constraint firstItem="UKx-vz-P8A" firstAttribute="leading" secondItem="Vqu-BF-CXR" secondAttribute="leading" constant="16" id="cbA-zR-npt"/>
+                            <constraint firstAttribute="bottom" secondItem="ncm-cb-k0V" secondAttribute="bottom" id="dTY-ts-5FY"/>
+                            <constraint firstItem="UKx-vz-P8A" firstAttribute="top" secondItem="Vqu-BF-CXR" secondAttribute="top" constant="16" id="h08-mO-0th"/>
+                            <constraint firstItem="Vqu-BF-CXR" firstAttribute="bottom" secondItem="2qQ-76-aRp" secondAttribute="bottom" constant="16" id="h9d-xV-Sh0"/>
+                            <constraint firstItem="ncm-cb-k0V" firstAttribute="leading" secondItem="vfu-7e-vkG" secondAttribute="leading" id="oGp-Rb-XBC"/>
+                            <constraint firstItem="Vqu-BF-CXR" firstAttribute="trailing" secondItem="UKx-vz-P8A" secondAttribute="trailing" constant="16" id="olz-ap-Q0L"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="L0d-qf-Q38">
@@ -436,12 +444,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="checkImageView" destination="2qQ-76-aRp" id="cLU-vS-og1"/>
                         <outlet property="textView" destination="UKx-vz-P8A" id="zAg-Ay-Ke1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vjn-cy-rNy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3011" y="-30"/>
+            <point key="canvasLocation" x="3009.375" y="-30.633802816901408"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BZa-Io-JTB">
@@ -482,6 +491,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

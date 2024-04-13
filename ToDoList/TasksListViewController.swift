@@ -37,7 +37,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     
     
     func didOpenView() {
-       
+        isNewTask = true
     }
     
     @IBAction func editPressed() {
@@ -86,7 +86,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
             guard let detailsVC = segue.destination as? DetailViewController else { return }
             
-            if let indexPath = tableView.indexPathForSelectedRow
+            if let indexPath = tableView.indexPathForSelectedRow, !isNewTask
             {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
@@ -206,11 +206,23 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
             
-            cell.backgroundColor = task.ready
-            ? UIColor(red: 0.910, green: 0.969, blue: 0.902, alpha: 1.0)
-            : .systemBackground
             
+            //if traitCollection.userInterfaceStyle == .dark {
+               
+                
+            if self.traitCollection.userInterfaceStyle == .dark {
+                cell.layer.borderColor = UIColor.link.cgColor // Синий цвет для темной темы
+             } else {
+                cell.layer.borderColor = UIColor.gray.cgColor // Серый цвет для светлой темы
+             }
+
             content.text = String(indexPath.row + 1) + ". " + task.text
+            
+            if task.ready {
+                content.image = UIImage(systemName: "checkmark")
+            } else {
+                content.image = UIImage()
+            }
             
             let substrings = task.text.split(separator: "\n")
             
@@ -225,6 +237,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         return cell
     }
     
+   
 }
-
 

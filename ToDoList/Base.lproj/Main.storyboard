@@ -394,7 +394,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" image="doc.on.doc" catalog="system"/>
                                         <connections>
-                                            <action selector="copyTaskButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="uQQ-be-bcc"/>
+                                            <action selector="cloneTaskButton" destination="L0L-Xi-65Y" eventType="touchUpInside" id="uQQ-be-bcc"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyA-DM-3C9" userLabel="NewTaskButton">

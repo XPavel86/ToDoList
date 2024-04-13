@@ -2,23 +2,31 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleIdentifier</key>
+	<string></string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
+		<key>UIApplicationSupportsTabbedSceneCollection</key>
+		<false/>
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>
-			<key>UIWindowSceneSessionRoleApplication</key>
+			<key>UIWindowSceneSessionRoleExternalDisplayNonInteractive</key>
 			<array>
 				<dict>
-					<key>UISceneConfigurationName</key>
-					<string>Default Configuration</string>
+					<key>UISceneClassName</key>
+					<string></string>
 					<key>UISceneDelegateClassName</key>
-					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<string></string>
+					<key>UISceneConfigurationName</key>
+					<string></string>
 					<key>UISceneStoryboardFile</key>
-					<string>Main</string>
+					<string></string>
 				</dict>
 			</array>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array/>
 		</dict>
 	</dict>
 </dict>

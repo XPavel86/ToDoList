@@ -92,15 +92,11 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
                 self.delegate = detailsVC
                 
                 delegate?.sendData(profileIndex, indexPath.section, indexPath.row, false)
-                //detailsVC.text = profile.categories[indexPath.section].tasks[indexPath.row].text
-                //detailsVC.profile = profile
             } else {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
                 
                 delegate?.sendData(profileIndex, selectedSection, 0, true)
-//                detailsVC.text = ""
-//                detailsVC.profile = profile
             }
         }
         else if segue.identifier == "CategorySegue" {
@@ -148,7 +144,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         if searching {
             return searchingNames.count
         } else {
-            return dm.getCountTasks(profileIndex: profileIndex, categoryIndex: section)
+            return dm.getTasks(profileIndex: profileIndex, categoryIndex: section).count
         }
     }
     

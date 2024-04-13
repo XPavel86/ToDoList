@@ -27,6 +27,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     private var previousText: String = ""
     private var isCreate = false
+    private var isDelete = false
     private var changeText = false
     
     func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
@@ -63,16 +64,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     override func viewWillLayoutSubviews() {
         super.viewDidLoad()
-
         changeColor()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear (animated)
-        
         saveText()
         delegate?.didUpdate()
-       
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -80,6 +78,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     @IBAction func undoEditButton() {
+        isDelete = false
         if !isCreate {
             if let undoManager = textView.undoManager, undoManager.canUndo {
                 undoManager.undo()
@@ -91,7 +90,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     @IBAction func clearTextButton() {
         if !textView.text.isEmpty {
-            deleteTask()
+            textView.text = ""
+            isDelete = true
         }
     }
     
@@ -115,14 +115,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     func updateText(_ textTitle: String = "") {
         guard !isNewTask else {
-            textView.text = "Новая заметка"
+            textView.text = "Новая заметка/задача"
             textView.becomeFirstResponder()
             self.textView.selectAll(nil)
             return
         }
         
         guard let profIndex = profileIndex else {return}
-        let count = dm.getCountTasks(profileIndex: profIndex, categoryIndex: categoryIndex)
+        let count = dm.getTasks(profileIndex: profIndex, categoryIndex: categoryIndex).count
         
         var afterTitle = "\(taskIndex + 1 )/\(count)"
         
@@ -140,14 +140,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     
-    @IBAction func copyTaskButton() {
+    @IBAction func cloneTaskButton() {
         guard !isNewTask else { return }
         if !textView.text.isEmpty {
-            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text) {
+            let cloneText = "Clone \(textView.text ?? "")"
+            dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: cloneText) {
                 self.isNewTask = false
             }
-            taskIndex = dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).count
-            
+            //incIndex()
             updateText()
         }
     }
@@ -162,14 +162,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     
     func saveText() {
          
-        guard !textView.text.isEmpty else { return }
+        let isEmpty = textView.text.isEmpty
         
-        if previousText != textView.text && changeText && !isCreate && !isNewTask {
+        if !isEmpty && previousText != textView.text && changeText && !isCreate && !isNewTask {
             dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).text = textView.text
             print("saveChange")
             }
 
-        if isCreate || isNewTask {
+        if !isEmpty && (isCreate || isNewTask) {
             dm.addTask(profileIndex: profileIndex, categoryIndex: categoryIndex, newDescription: textView.text) {
                 self.isNewTask = false
             }
@@ -177,8 +177,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
             print("isCreate")
         }
         
+        if isDelete && !isNewTask {
+            deleteTask()
+        }
+        
         isCreate = false
         changeText = false
+        isDelete = false
         
         previousText = textView.text
     }
@@ -203,7 +208,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func deleteTask() {
-        if !textView.text.isEmpty && !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
+        
+        if  !isCreate && textView.text.isEmpty && !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
+            print(#function)
             dm.removeTask(profileIndex: profileIndex, categoryIndex: categoryIndex, removeTaskIndex: taskIndex)
             decIndex()
             updateText()
@@ -211,7 +218,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func incIndex() {
-        if taskIndex < dm.getCategories(profileIndex: profileIndex).count - 1 {
+        if taskIndex < dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).count - 1 {
             taskIndex += 1
         }
     }

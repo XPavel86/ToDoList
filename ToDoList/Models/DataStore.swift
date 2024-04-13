@@ -114,28 +114,13 @@ final class DataStore {
             }
         }
         
-        func changeTask(profileIndex: Int, categoryIndex: Int, taskIndex: Int, newDescription: String = "" , ready: Bool = false)  {
-            let task = dataStore.profiles[profileIndex].categories[categoryIndex].tasks[taskIndex]
-            if !newDescription.isEmpty {
-                task.text = newDescription
-            }
-            task.ready = ready
-        }
-        
+       
         func getTasks(profileIndex: Int, categoryIndex: Int) -> [DataStore.Task] {
             return dataStore.profiles[profileIndex].categories[categoryIndex].tasks
         }
         
         func getTask(profileIndex: Int, categoryIndex: Int, taskIndex: Int) -> DataStore.Task {
-            return dataStore.profiles[profileIndex].categories[categoryIndex].tasks[taskIndex]
-        }
-        
-        func getCountTasks(profileIndex: Int, categoryIndex: Int) -> Int {
-            dataStore.profiles[profileIndex].categories[categoryIndex].tasks.count
-        }
-        
-        func isEmptyTasks(profileIndex: Int, categoryIndex: Int) -> Bool {
-            dataStore.profiles[profileIndex].categories[categoryIndex].tasks.isEmpty
+             dataStore.profiles[profileIndex].categories[categoryIndex].tasks[taskIndex]
         }
     }
         //MARK: Data Generation

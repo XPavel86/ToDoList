@@ -80,17 +80,14 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     }
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
-        
         let removedTask = profile.categories[sourceIndexPath.section].tasks.remove(at: sourceIndexPath.row)
         
         profile.categories[destIndexPath.section].tasks.insert(removedTask, at: destIndexPath.row)
         
         tableView.reloadData()
-        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         if searching {
             return 1
         } else {
@@ -199,11 +196,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     func buttonPressed(inSection section: Int) {
         selectedSection = section
     }
-    
- //   // MARK: - Private Methods
-//    private func didOpenView() {
-//        isNewTask = true
-//    }
+}
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var data: [String] = []

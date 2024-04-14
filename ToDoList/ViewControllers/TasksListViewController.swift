@@ -28,8 +28,17 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     private var isNewTask: Bool = false
     private var selectedSection: Int!
     
-    private var searchingNames: [String] = []
-    private var searching = false
+
+    private var isSearching = false
+    
+    struct SearchResult {
+        var text: String
+        var indexCategory: Int
+        var indexTask: Int
+    }
+    
+    private var searchData: [SearchResult] = []
+    
     
     // MARK: - Initializers
     override func viewDidLoad() {
@@ -48,21 +57,30 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
         if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
             guard let detailsVC = segue.destination as? DetailViewController else { return }
             
+            func sendDelegate(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
+                detailsVC.delegate = self
+                self.delegate = detailsVC
+                
+                delegate?.sendData(profileIndex, categoryIndex, taskIndex, isNewTask)
+            }
+            
             if let indexPath = tableView.indexPathForSelectedRow
             {
-                detailsVC.delegate = self
-                self.delegate = detailsVC
-                
-                delegate?.sendData(profileIndex, indexPath.section, indexPath.row, false)
+                if isSearching {
+                    let indexCategory = searchData[indexPath.row].indexCategory
+                    let indexTask = searchData[indexPath.row].indexTask
+                    
+                    sendDelegate(profileIndex, indexCategory, indexTask, false)
+                    
+                } else {
+                    sendDelegate(profileIndex, indexPath.section, indexPath.row, false)
+                }
             } else {
-                detailsVC.delegate = self
-                self.delegate = detailsVC
-                
-                delegate?.sendData(profileIndex, selectedSection, 0, true)
+                sendDelegate(profileIndex, selectedSection, 0, true)
             }
         }
         else if segue.identifier == "CategorySegue" {
@@ -91,7 +109,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
-        if searching {
+        if isSearching {
             return 1
         } else {
             return dm.getCategories(profileIndex: profileIndex).count
@@ -99,8 +117,8 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searching {
-            return searchingNames.count
+        if isSearching {
+            return searchData.count
         } else {
             return dm.getTasks(profileIndex: profileIndex, categoryIndex: section).count
         }
@@ -117,13 +135,13 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HeaderTableViewCell
-
+        
         cell?.buttonAction = { [weak self] in
             self?.buttonPressed(inSection: section)
         }
         
         let category =  profile.categories[section]
-        if searching {
+        if isSearching {
             cell?.isHidden = true
         } else
         {
@@ -144,20 +162,20 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         content.textProperties.numberOfLines = 1
         content.secondaryTextProperties.numberOfLines = 1
         
-        if searching {
-            content.text = searchingNames[indexPath.row]
-            content.secondaryText = extractSecondString(searchingNames[indexPath.row])
+        if isSearching {
+            content.text = searchData[indexPath.row].text
+            content.secondaryText = extractSecondString(searchData[indexPath.row].text)
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
-    
+            
             if self.traitCollection.userInterfaceStyle == .dark {
                 cell.layer.borderWidth = 1
                 cell.layer.borderColor = UIColor.link.cgColor
             } else {
                 cell.layer.borderColor = UIColor.gray.cgColor
-             }
-
+            }
+            
             content.text = String(indexPath.row + 1) + ". " + task.text
             
             if task.ready {
@@ -192,7 +210,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     }
     
     // MARK: - Public Methods
-     func didUpdate() {
+    func didUpdate() {
         tableView.reloadData()
     }
     
@@ -200,26 +218,26 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         selectedSection = section
     }
     
- //   // MARK: - Private Methods
-//    private func didOpenView() {
-//        isNewTask = true
-//    }
-
+    // MARK: - Private Methods
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        var data: [String] = []
-        
         if searchText.isEmpty {
-            searching = false
+            isSearching = false
+            searchData.removeAll() // Удаляем все элементы из массива при пустом поисковом запросе
         } else {
             for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
-                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
-                    element in data.append(element.text)
+                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach { indexTask, element in
+                    if element.text.lowercased().contains(searchText.lowercased()) {
+                        let result = SearchResult(text: element.text, indexCategory: categoryIndex, indexTask: indexTask)
+                        if !searchData.contains(where: { $0.text == result.text }) {
+                            searchData.append(result)
+                        }
+                    }
                 }
             }
-            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
-            searching = true
+            isSearching = true
         }
         tableView.reloadData()
     }
+
 }
 

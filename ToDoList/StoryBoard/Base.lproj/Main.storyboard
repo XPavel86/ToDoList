@@ -114,7 +114,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="addButton" destination="vAI-Np-tIe" id="Exn-IF-otL"/>
                                     <outlet property="сategoryLabel" destination="eDC-HV-utF" id="gpN-QP-yKg"/>
                                 </connections>
                             </tableViewCell>

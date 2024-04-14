@@ -12,12 +12,7 @@ class HeaderTableViewCell: UITableViewCell {
     var buttonAction: (() -> ())?
 
     @IBOutlet var сategoryLabel: UILabel!
-    @IBOutlet var addButton: UIButton!
-
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//    }
-    
+ 
     @IBAction func addTaskPressed() {
         buttonAction?()
     }

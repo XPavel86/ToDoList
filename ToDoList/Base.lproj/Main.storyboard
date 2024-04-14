@@ -55,6 +55,48 @@
             </objects>
             <point key="canvasLocation" x="75" y="-30"/>
         </scene>
+        <!--Settings View Controller-->
+        <scene sceneID="Kir-kZ-gii">
+            <objects>
+                <viewController id="9ae-2e-eCD" customClass="SettingsViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mvz-MC-a64">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="CWm-6t-PiA">
+                                <rect key="frame" x="16" y="136.5" width="288" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19P-gY-hjv">
+                                        <rect key="frame" x="0.0" y="0.0" width="139" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PZS-hm-sBD">
+                                        <rect key="frame" x="239" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="switchDidChanged:" destination="9ae-2e-eCD" eventType="valueChanged" id="P2u-80-NrR"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3ZM-ng-of0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="CWm-6t-PiA" firstAttribute="top" secondItem="3ZM-ng-of0" secondAttribute="top" constant="32" id="UfS-Qm-r2l"/>
+                            <constraint firstItem="3ZM-ng-of0" firstAttribute="trailing" secondItem="CWm-6t-PiA" secondAttribute="trailing" constant="16" id="qhS-7o-x2l"/>
+                            <constraint firstItem="CWm-6t-PiA" firstAttribute="leading" secondItem="3ZM-ng-of0" secondAttribute="leading" constant="16" id="sfP-Ot-7hf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="nameSettings" destination="19P-gY-hjv" id="0Qb-go-OTn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="h6a-fw-R0j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2523.75" y="-804.92957746478874"/>
+        </scene>
         <!--Root View Controller-->
         <scene sceneID="pY3-2u-qfe">
             <objects>
@@ -151,7 +193,11 @@
                             </connections>
                         </barButtonItem>
                         <rightBarButtonItems>
-                            <barButtonItem title="Item" image="gearshape" catalog="system" id="OgO-in-h7Q"/>
+                            <barButtonItem title="Item" image="gearshape" catalog="system" id="OgO-in-h7Q">
+                                <connections>
+                                    <segue destination="9ae-2e-eCD" kind="show" identifier="SettingsSegue" id="hhk-vp-nHD"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Item" image="folder" catalog="system" id="KaR-H1-cUT">
                                 <connections>
                                     <segue destination="Gsx-5n-Qaj" kind="presentation" identifier="CategorySegue" modalPresentationStyle="fullScreen" id="ShW-aL-Wj9"/>
@@ -458,7 +504,7 @@
                 <navigationController id="gx5-bH-rbL" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="NbA-r2-hMH"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="0bW-Ul-8ek">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="92.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="98.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

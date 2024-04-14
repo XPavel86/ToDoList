@@ -30,12 +30,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     private var isCreate = false
     private var isDelete = false
     private var changeText = false
+
     
     func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
         self.profileIndex = profileIndex
         self.categoryIndex = categoryIndex
         self.taskIndex = taskIndex
         self.isNewTask = isNewTask
+
         }
     
     override func viewDidLoad() {
@@ -226,6 +228,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
                 taskIndex -= 1
             }
         }
+    
+
 }
 
 

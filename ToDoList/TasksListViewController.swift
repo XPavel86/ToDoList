@@ -11,7 +11,13 @@ protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
 }
 //СellDelegate,
-class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate, SettingsViewControllerDelegate {
+    // Вызываем метод, когда значение изменяется
+    func switchValueChanged(_ value: Bool) {
+        switchChanged = value
+        
+    }
+    
     
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var searchBar: UISearchBar!
@@ -21,6 +27,9 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     weak var delegate: DataDelegate?
     
     var isNewTask: Bool = false
+    
+    // Значение для номера строки
+    var switchChanged: Bool = false
 
     var profile: DataStore.Profile!
     var profileIndex: Int = 0
@@ -33,6 +42,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
 
     func didUpdate() {
         tableView.reloadData()
+        
     }
     
     
@@ -71,6 +81,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         tableView.reloadData()
     }
     
+
     
     override func viewDidLayoutSubviews() {
         searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
@@ -105,6 +116,7 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
             categoryVC.profileIndex = profileIndex
             categoryVC.delegate = self
         }
+        
         isNewTask = false
     }
  
@@ -215,8 +227,16 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
              } else {
                 cell.layer.borderColor = UIColor.gray.cgColor // Серый цвет для светлой темы
              }
+            
+            //Метод который меняет значение строки в зависимости от свича
+            if switchChanged {
+                content.text = "\(switchChanged ? "1" : "")" + ". " + task.text
+            } else {
+                content.text = "\(indexPath.row + 1)" + ". " + task.text
+            }
+             
 
-            content.text = String(indexPath.row + 1) + ". " + task.text
+            //content.text = String(indexPath.row + 1) + ". " + task.text
             
             if task.ready {
                 content.image = UIImage(systemName: "checkmark")

@@ -222,7 +222,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText.isEmpty {
             isSearching = false
-            searchData.removeAll() // Удаляем все элементы из массива при пустом поисковом запросе
+            searchData.removeAll()
         } else {
             for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
                 dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach { indexTask, element in
@@ -238,6 +238,5 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         }
         tableView.reloadData()
     }
-
 }
 

@@ -17,7 +17,6 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
    
     @IBOutlet var textField: UITextField!
     @IBOutlet var tableView: UITableView!
-    @IBOutlet var stackView: UIStackView!
     
     var profileIndex: Int!
     var indexCategory: Int = 0

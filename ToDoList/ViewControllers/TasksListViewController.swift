@@ -107,12 +107,11 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        50
+        60
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        40
+        50
     }
     
     

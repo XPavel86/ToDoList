@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -78,37 +79,38 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" id="TmF-vV-xDo" customClass="HeaderTableViewCell" customModule="ToDoList">
-                                <rect key="frame" x="16" y="94" width="288" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HeaderCell" rowHeight="55" id="TmF-vV-xDo" customClass="HeaderTableViewCell" customModule="ToDoList">
+                                <rect key="frame" x="16" y="94" width="288" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TmF-vV-xDo" id="jtm-l5-bPb">
-                                    <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-Np-tIe">
-                                            <rect key="frame" x="228.5" y="0.0" width="48.5" height="43"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="48.5" id="FLa-Hk-i2f"/>
-                                            </constraints>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" image="plus.app" catalog="system"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDC-HV-utF" userLabel="categoryLabel">
+                                            <rect key="frame" x="0.0" y="0.0" width="220" height="26.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-Np-tIe">
+                                            <rect key="frame" x="222" y="-2" width="50" height="34"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                            </state>
+                                            <buttonConfiguration key="configuration" style="plain">
+                                                <imageReference key="image" image="plus.app" catalog="system" symbolScale="large"/>
+                                                <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
+                                            </buttonConfiguration>
                                             <connections>
                                                 <action selector="addTaskPressed" destination="TmF-vV-xDo" eventType="touchUpInside" id="sxD-KU-LuW"/>
                                                 <segue destination="L0L-Xi-65Y" kind="show" identifier="DetailSegueAdd" id="IEr-3z-UIc"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDC-HV-utF" userLabel="categoryLabel">
-                                            <rect key="frame" x="16" y="0.0" width="187" height="44"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="187" id="S4W-MH-FQB"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="vAI-Np-tIe" secondAttribute="trailing" constant="11" id="TDb-lO-j5k" userLabel="trailing = Add Button.trailing + 8"/>
+                                        <constraint firstAttribute="trailing" secondItem="vAI-Np-tIe" secondAttribute="trailing" constant="16" id="MVb-rJ-jl0"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -116,22 +118,22 @@
                                     <outlet property="сategoryLabel" destination="eDC-HV-utF" id="gpN-QP-yKg"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="qep-pa-wsR" detailTextLabel="LVY-P0-2e0" style="IBUITableViewCellStyleSubtitle" id="hQt-Cp-sNG">
-                                <rect key="frame" x="16" y="137.5" width="288" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="qep-pa-wsR" detailTextLabel="LVY-P0-2e0" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="hQt-Cp-sNG">
+                                <rect key="frame" x="16" y="149" width="288" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hQt-Cp-sNG" id="Grw-h2-dZT" customClass="TableViewCell" customModule="ToDoList" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="288" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="288" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="qep-pa-wsR">
-                                            <rect key="frame" x="16" y="6" width="25" height="14.5"/>
+                                            <rect key="frame" x="16" y="13" width="25" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LVY-P0-2e0">
-                                            <rect key="frame" x="16" y="22.5" width="44" height="14.5"/>
+                                            <rect key="frame" x="16" y="29.5" width="44" height="14.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                             <nil key="textColor"/>
@@ -275,7 +277,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="CIy-eG-ICw"/>
                     <connections>
-                        <outlet property="stackView" destination="GmH-6I-6Hx" id="Dv8-iH-Wt4"/>
                         <outlet property="tableView" destination="oI2-nP-MZ3" id="whU-pX-H6t"/>
                         <outlet property="textField" destination="oqg-U2-4Nx" id="hcD-k2-tox"/>
                     </connections>
@@ -486,7 +487,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="IEr-3z-UIc"/>
+        <segue reference="YDs-BX-ECD"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="arrow.uturn.backward" catalog="system" width="128" height="113"/>

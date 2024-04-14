@@ -2,50 +2,20 @@
 //  SettingsViewController.swift
 //  ToDoList
 //
-//  Created by user on 14.04.2024.
+//  Created by Pavel Dolgopolov on 14.04.2024.
 //
 
 import UIKit
 
-//Создаем потокол делегата
-protocol SettingsViewControllerDelegate: AnyObject {
-    //Добавили свойство делегата
-    func switchValueChanged(_ value: Bool)
-}
-
-final class SettingsViewController: UIViewController, DataDelegate {
-    func sendData(_ profileIndex: Int, _ categoryIndex: Int, _ taskIndex: Int, _ isNewTask: Bool) {
-    }
+class SettingsViewController: UIViewController {
     
+    @IBOutlet var switchLineNumbers: UISwitch!
     
-
-    weak var delegate: SettingsViewControllerDelegate?
+    weak var delegate: TasksViewControllerDelegate?
     
-    var switchChanged: Bool = false {
-        didSet {
-            delegate?.switchValueChanged(switchChanged)
-        }
-
-    }
-    
-    @IBOutlet var nameSettings: UILabel!
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
-        let taskListVC = segue.destination as? TasksListViewController
-        taskListVC?.delegate = self //Устанавливаем taskListVC в качестве делегата
-        taskListVC?.switchChanged = switchChanged.self
+    override func viewDidDisappear(_ animated: Bool) {
         
-    }
-    
-    
-    @IBAction func switchDidChanged(_ sender: UISwitch) {
-        if sender .isOn {
-            switchChanged = true
-            nameSettings.text = "On"
-        } else {
-            switchChanged = false
-            nameSettings.text = "Off"
-        }
+        delegate?.islineNumbering = switchLineNumbers.isOn
+        delegate?.didUpdate()
     }
 }

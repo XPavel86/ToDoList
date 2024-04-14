@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CE5B74F92BCBDB3500EB0ABA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE5B74F82BCBDB3500EB0ABA /* SettingsViewController.swift */; };
 		EF368D552BC84DDF00E0EA71 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */; };
 		EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E1792BB85DD0000530A0 /* AppDelegate.swift */; };
 		EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */; };
@@ -21,10 +20,10 @@
 		EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9072112BBD42CD008252B0 /* DetailViewController.swift */; };
 		EFAC1C272BCB35C70067B8DA /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */; };
 		EFC839482BC3F6250004E87A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC839472BC3F6250004E87A /* DataStore.swift */; };
+		EFEC7FD02BCC4EA6005B631F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFEC7FCF2BCC4EA6005B631F /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		CE5B74F82BCBDB3500EB0ABA /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		EF60E1762BB85DD0000530A0 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EF60E1792BB85DD0000530A0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +39,7 @@
 		EF9072112BBD42CD008252B0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		EFC839472BC3F6250004E87A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		EFEC7FCF2BCC4EA6005B631F /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +77,12 @@
 				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
 				EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */,
-				CE5B74F82BCBDB3500EB0ABA /* SettingsViewController.swift */,
 				EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */,
 				EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */,
 				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,
 				EF73CBDD2BC86B120049B104 /* EditCategoryViewController.swift */,
 				EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */,
+				EFEC7FCF2BCC4EA6005B631F /* SettingsViewController.swift */,
 				EF60E17F2BB85DD0000530A0 /* Main.storyboard */,
 				EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */,
 				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
@@ -172,7 +172,7 @@
 			files = (
 				EF60E17E2BB85DD0000530A0 /* StartViewController.swift in Sources */,
 				EF60E17A2BB85DD0000530A0 /* AppDelegate.swift in Sources */,
-				CE5B74F92BCBDB3500EB0ABA /* SettingsViewController.swift in Sources */,
+				EFEC7FD02BCC4EA6005B631F /* SettingsViewController.swift in Sources */,
 				EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */,
 				EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */,
 				EF368D552BC84DDF00E0EA71 /* CategoryViewController.swift in Sources */,

@@ -9,14 +9,11 @@ import UIKit
 
 protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
+    var islineNumbering: Bool { get set }
 }
 //СellDelegate,
-class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate, SettingsViewControllerDelegate {
-    // Вызываем метод, когда значение изменяется
-    func switchValueChanged(_ value: Bool) {
-        switchChanged = value
-        
-    }
+class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+    
     
     
     @IBOutlet var editButton: UIBarButtonItem!
@@ -26,11 +23,8 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     
     weak var delegate: DataDelegate?
     
-    var isNewTask: Bool = false
+    var islineNumbering: Bool = true
     
-    // Значение для номера строки
-    var switchChanged: Bool = false
-
     var profile: DataStore.Profile!
     var profileIndex: Int = 0
     
@@ -45,11 +39,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         
     }
     
-    
-    func didOpenView() {
-        isNewTask = true
-    }
-    
     @IBAction func editPressed() {
         self.isEditing.toggle()
     }
@@ -60,8 +49,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
     }
-    
-    
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         var data: [String] = []
@@ -93,11 +80,17 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        if segue.identifier == "SettingsSegue" {
+            guard let settingsVC = segue.destination as? SettingsViewController else { return}
+            print("SettingsSegue")
+            settingsVC.delegate = self
+            //self.delegate = settingsVC
+        }
         
         if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
             guard let detailsVC = segue.destination as? DetailViewController else { return }
             
-            if let indexPath = tableView.indexPathForSelectedRow, !isNewTask
+            if let indexPath = tableView.indexPathForSelectedRow
             {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
@@ -115,9 +108,8 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
             
             categoryVC.profileIndex = profileIndex
             categoryVC.delegate = self
+            
         }
-        
-        isNewTask = false
     }
  
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -228,13 +220,10 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
                 cell.layer.borderColor = UIColor.gray.cgColor // Серый цвет для светлой темы
              }
             
-            //Метод который меняет значение строки в зависимости от свича
-            if switchChanged {
-                content.text = "\(switchChanged ? "1" : "")" + ". " + task.text
-            } else {
-                content.text = "\(indexPath.row + 1)" + ". " + task.text
-            }
-             
+            
+            content.text = islineNumbering 
+            ? "\(indexPath.row + 1)" + ". " + task.text
+            : task.text
 
             //content.text = String(indexPath.row + 1) + ". " + task.text
             

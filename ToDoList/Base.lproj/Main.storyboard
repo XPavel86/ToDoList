@@ -63,20 +63,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="CWm-6t-PiA">
-                                <rect key="frame" x="16" y="136.5" width="288" height="31"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="O2e-Qu-obv">
+                                <rect key="frame" x="16" y="87" width="288" height="31"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19P-gY-hjv">
-                                        <rect key="frame" x="0.0" y="0.0" width="139" height="31"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Нумерация строк" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="19P-gY-hjv">
+                                        <rect key="frame" x="0.0" y="0.0" width="223" height="31"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PZS-hm-sBD">
                                         <rect key="frame" x="239" y="0.0" width="51" height="31"/>
-                                        <connections>
-                                            <action selector="switchDidChanged:" destination="9ae-2e-eCD" eventType="valueChanged" id="P2u-80-NrR"/>
-                                        </connections>
                                     </switch>
                                 </subviews>
                             </stackView>
@@ -84,13 +81,13 @@
                         <viewLayoutGuide key="safeArea" id="3ZM-ng-of0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="CWm-6t-PiA" firstAttribute="top" secondItem="3ZM-ng-of0" secondAttribute="top" constant="32" id="UfS-Qm-r2l"/>
-                            <constraint firstItem="3ZM-ng-of0" firstAttribute="trailing" secondItem="CWm-6t-PiA" secondAttribute="trailing" constant="16" id="qhS-7o-x2l"/>
-                            <constraint firstItem="CWm-6t-PiA" firstAttribute="leading" secondItem="3ZM-ng-of0" secondAttribute="leading" constant="16" id="sfP-Ot-7hf"/>
+                            <constraint firstItem="3ZM-ng-of0" firstAttribute="trailing" secondItem="O2e-Qu-obv" secondAttribute="trailing" constant="16" id="K0m-4W-8VU"/>
+                            <constraint firstItem="3ZM-ng-of0" firstAttribute="top" secondItem="O2e-Qu-obv" secondAttribute="top" constant="17.5" id="ng2-at-n81"/>
+                            <constraint firstItem="O2e-Qu-obv" firstAttribute="leading" secondItem="3ZM-ng-of0" secondAttribute="leading" constant="16" id="tzK-BW-emH"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="nameSettings" destination="19P-gY-hjv" id="0Qb-go-OTn"/>
+                        <outlet property="switchLineNumbers" destination="PZS-hm-sBD" id="fMG-CY-kP2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h6a-fw-R0j" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -539,7 +536,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -20,18 +20,6 @@ final class StartViewController: UIViewController, UIPickerViewDelegate, UIPicke
         usersPickerView?.dataSource = self
     }
     
-    func numberOfComponents (in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        dm.getProfiles().count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        dm.getProfile(at: row).name
-    }
-    
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         guard let destinationVC = segue.destination as? UINavigationController else { return }
@@ -45,6 +33,18 @@ final class StartViewController: UIViewController, UIPickerViewDelegate, UIPicke
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         performSegue(withIdentifier: "segueTasks", sender: self)
+    }
+    
+    func numberOfComponents (in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        dm.getProfiles().count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        dm.getProfile(at: row).name
     }
 }
 

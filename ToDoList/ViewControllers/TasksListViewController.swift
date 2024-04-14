@@ -13,63 +13,32 @@ protocol TasksViewControllerDelegate: AnyObject {
 
 final class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
     
+    // MARK: - IB Outlets
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var searchBar: UISearchBar!
     
-    private let dm = DataStore.Manager()
+    // MARK: - Public Properties
+    weak var delegate: DataDelegate?
+    var profileIndex: Int = 0
     var profile: DataStore.Profile!
     
-    weak var delegate: DataDelegate?
+    // MARK: - Private Properties
+    private let dm = DataStore.Manager()
     
     private var isNewTask: Bool = false
-    var profileIndex: Int = 0
     private var selectedSection: Int!
     
     private var searchingNames: [String] = []
     private var searching = false
     
-
-     func didUpdate() {
-        tableView.reloadData()
-    }
-    
-    
-    private func didOpenView() {
-        isNewTask = true
-    }
-    
-    @IBAction func editPressed() {
-        self.isEditing.toggle()
-    }
-    
-    
+    // MARK: - Initializers
     override func viewDidLoad() {
         super.viewDidLoad()
         title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
     }
     
-    
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        var data: [String] = []
-        
-        if searchText.isEmpty {
-            searching = false
-        } else {
-            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
-                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
-                    element in data.append(element.text)
-                }
-            }
-            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
-
-            searching = true
-        }
-        tableView.reloadData()
-    }
-    
-    
+    // MARK: - Overrides Methods
     override func viewDidLayoutSubviews() {
         searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
         
@@ -79,12 +48,11 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
+
         if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
             guard let detailsVC = segue.destination as? DetailViewController else { return }
             
-            if let indexPath = tableView.indexPathForSelectedRow, !isNewTask
+            if let indexPath = tableView.indexPathForSelectedRow
             {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
@@ -105,13 +73,11 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         }
         isNewTask = false
     }
- 
+    
+    // MARK: - Table view
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        
         return .none
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
         
@@ -122,12 +88,6 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         tableView.reloadData()
         
     }
-    
-    @IBAction func closePressed() {
-        dismiss(animated: true)
-    }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -158,9 +118,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HeaderTableViewCell
-        
-       // cell?.delegate = self
-        
+
         cell?.buttonAction = { [weak self] in
             self?.buttonPressed(inSection: section)
         }
@@ -176,11 +134,6 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         return cell
     }
     
-    
-    func buttonPressed(inSection section: Int) {
-        selectedSection = section
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
@@ -194,12 +147,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         
         if searching {
             content.text = searchingNames[indexPath.row]
-            let substrings = searchingNames[indexPath.row].split(separator: "\n")
-            
-            if substrings.count >= 2 {
-                let substring = substrings[1]
-                content.secondaryText = String(substring)
-            }
+            content.secondaryText = extractSecondString(searchingNames[indexPath.row])
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
@@ -218,29 +166,61 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             } else {
                 content.image = UIImage()
             }
-            
-            let substrings = task.text.split(separator: "\n")
-            
-            if substrings.count >= 2 {
-                let substring = substrings[1]
-                content.secondaryText = String(substring)
-            }
+            content.secondaryText = extractSecondString(task.text)
         }
         
         cell.contentConfiguration = content
         
+        func extractSecondString(_ inputText: String) -> String {
+            let substrings = inputText.split(separator: "\n")
+            
+            if substrings.count >= 2 {
+                let substring = substrings[1]
+                return String(substring)
+            }
+            return ""
+        }
         return cell
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        hideKeyboard()
+    // MARK: - IB Actions
+    @IBAction func editPressed() {
+        self.isEditing.toggle()
     }
     
-    private func hideKeyboard() {
-        view.endEditing(true)
+    @IBAction func closePressed() {
+        dismiss(animated: true)
     }
     
-   
+    // MARK: - Public Methods
+     func didUpdate() {
+        tableView.reloadData()
+    }
+    
+    func buttonPressed(inSection section: Int) {
+        selectedSection = section
+    }
+    
+ //   // MARK: - Private Methods
+//    private func didOpenView() {
+//        isNewTask = true
+//    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        var data: [String] = []
+        
+        if searchText.isEmpty {
+            searching = false
+        } else {
+            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
+                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
+                    element in data.append(element.text)
+                }
+            }
+            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
+            searching = true
+        }
+        tableView.reloadData()
+    }
 }
 

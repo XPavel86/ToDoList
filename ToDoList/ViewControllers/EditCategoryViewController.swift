@@ -9,12 +9,21 @@ import UIKit
 
 class EditCategoryViewController: UIViewController {
 
+    @IBOutlet var textField: UITextField!
+    
     weak var delegate: CategoryViewControllerDelegate?
     
     var isSave: Bool = false
     var categoryName: String?
-    
-    @IBOutlet var textField: UITextField!
+
+    @IBAction func closePressed(sender: UIButton) {
+        isSave = sender.tag == 0
+        ? false
+        : true
+        
+        endEditing()
+        dismiss(animated: true)
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -30,14 +39,4 @@ class EditCategoryViewController: UIViewController {
             delegate?.didUpdate(text)
         }
     }
-    
-    @IBAction func closePressed(sender: UIButton) {
-        isSave = sender.tag == 0
-        ? false
-        : true
-        
-        endEditing()
-        dismiss(animated: true)
-    }
-    
 }

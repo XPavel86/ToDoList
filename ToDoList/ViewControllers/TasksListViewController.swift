@@ -10,68 +10,35 @@ import UIKit
 protocol TasksViewControllerDelegate: AnyObject {
     func didUpdate()
 }
-//СellDelegate,
-class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+
+final class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
     
+    // MARK: - IB Outlets
     @IBOutlet var editButton: UIBarButtonItem!
     @IBOutlet var searchBar: UISearchBar!
     
-    let dm = DataStore.Manager()
-    
+    // MARK: - Public Properties
     weak var delegate: DataDelegate?
-    
-    var isNewTask: Bool = false
-
-    var profile: DataStore.Profile!
     var profileIndex: Int = 0
+    var profile: DataStore.Profile!
     
-    var selectedSection: Int!
+    // MARK: - Private Properties
+    private let dm = DataStore.Manager()
     
-    var searchingNames: [String] = []
-    var searching = false
+    private var isNewTask: Bool = false
+    private var selectedSection: Int!
     
-
-    func didUpdate() {
-        tableView.reloadData()
-    }
+    private var searchingNames: [String] = []
+    private var searching = false
     
-    
-    func didOpenView() {
-        isNewTask = true
-    }
-    
-    @IBAction func editPressed() {
-        self.isEditing.toggle()
-    }
-    
-    
+    // MARK: - Initializers
     override func viewDidLoad() {
         super.viewDidLoad()
         title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
     }
     
-    
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        var data: [String] = []
-        
-        if searchText.isEmpty {
-            searching = false
-        } else {
-            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
-                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
-                    element in data.append(element.text)
-                }
-            }
-            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
-
-            searching = true
-        }
-        tableView.reloadData()
-    }
-    
-    
+    // MARK: - Overrides Methods
     override func viewDidLayoutSubviews() {
         searchBar.frame = CGRect(x: 10, y: 0, width: tableView.frame.width - 20, height: searchBar.frame.height)
         
@@ -81,12 +48,11 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
+
         if segue.identifier == "DetailSegue" || segue.identifier == "DetailSegueAdd" {
             guard let detailsVC = segue.destination as? DetailViewController else { return }
             
-            if let indexPath = tableView.indexPathForSelectedRow, !isNewTask
+            if let indexPath = tableView.indexPathForSelectedRow
             {
                 detailsVC.delegate = self
                 self.delegate = detailsVC
@@ -107,13 +73,11 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         }
         isNewTask = false
     }
- 
+    
+    // MARK: - Table view
     override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        
         return .none
     }
-    
-    
     
     override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destIndexPath: IndexPath) {
         
@@ -124,12 +88,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         tableView.reloadData()
         
     }
-    
-    @IBAction func closePressed() {
-        dismiss(animated: true)
-    }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -149,20 +107,17 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        50
+        60
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        40
+        50
     }
     
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeaderCell") as? HeaderTableViewCell
-        
-       // cell?.delegate = self
-        
+
         cell?.buttonAction = { [weak self] in
             self?.buttonPressed(inSection: section)
         }
@@ -178,11 +133,6 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         return cell
     }
     
-    
-    func buttonPressed(inSection section: Int) {
-        selectedSection = section
-    }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
@@ -196,24 +146,16 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
         
         if searching {
             content.text = searchingNames[indexPath.row]
-            let substrings = searchingNames[indexPath.row].split(separator: "\n")
-            
-            if substrings.count >= 2 {
-                let substring = substrings[1]
-                content.secondaryText = String(substring)
-            }
+            content.secondaryText = extractSecondString(searchingNames[indexPath.row])
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
-            
-            
-            //if traitCollection.userInterfaceStyle == .dark {
-               
-                
+    
             if self.traitCollection.userInterfaceStyle == .dark {
-                cell.layer.borderColor = UIColor.link.cgColor // Синий цвет для темной темы
-             } else {
-                cell.layer.borderColor = UIColor.gray.cgColor // Серый цвет для светлой темы
+                cell.layer.borderWidth = 1
+                cell.layer.borderColor = UIColor.link.cgColor
+            } else {
+                cell.layer.borderColor = UIColor.gray.cgColor
              }
 
             content.text = String(indexPath.row + 1) + ". " + task.text
@@ -223,20 +165,61 @@ class TasksListViewController: UITableViewController, TasksViewControllerDelegat
             } else {
                 content.image = UIImage()
             }
-            
-            let substrings = task.text.split(separator: "\n")
-            
-            if substrings.count >= 2 {
-                let substring = substrings[1]
-                content.secondaryText = String(substring)
-            }
+            content.secondaryText = extractSecondString(task.text)
         }
         
         cell.contentConfiguration = content
         
+        func extractSecondString(_ inputText: String) -> String {
+            let substrings = inputText.split(separator: "\n")
+            
+            if substrings.count >= 2 {
+                let substring = substrings[1]
+                return String(substring)
+            }
+            return ""
+        }
         return cell
     }
     
-   
+    // MARK: - IB Actions
+    @IBAction func editPressed() {
+        self.isEditing.toggle()
+    }
+    
+    @IBAction func closePressed() {
+        dismiss(animated: true)
+    }
+    
+    // MARK: - Public Methods
+     func didUpdate() {
+        tableView.reloadData()
+    }
+    
+    func buttonPressed(inSection section: Int) {
+        selectedSection = section
+    }
+    
+ //   // MARK: - Private Methods
+//    private func didOpenView() {
+//        isNewTask = true
+//    }
+
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        var data: [String] = []
+        
+        if searchText.isEmpty {
+            searching = false
+        } else {
+            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
+                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.forEach {
+                    element in data.append(element.text)
+                }
+            }
+            searchingNames = data.filter { $0.lowercased().contains(searchText.lowercased()) }
+            searching = true
+        }
+        tableView.reloadData()
+    }
 }
 

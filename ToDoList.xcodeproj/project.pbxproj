@@ -18,7 +18,7 @@
 		EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */; };
 		EF8371BC2BB9C08500FBCC38 /* HeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */; };
 		EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF9072112BBD42CD008252B0 /* DetailViewController.swift */; };
-		EFAC1C272BCB35C70067B8DA /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */; };
+		EFAC1C292BCB47B10067B8DA /* extention+UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAC1C282BCB47B10067B8DA /* extention+UIViewController.swift */; };
 		EFC839482BC3F6250004E87A /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFC839472BC3F6250004E87A /* DataStore.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +36,7 @@
 		EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksListViewController.swift; sourceTree = "<group>"; };
 		EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderTableViewCell.swift; sourceTree = "<group>"; };
 		EF9072112BBD42CD008252B0 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		EFAC1C282BCB47B10067B8DA /* extention+UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "extention+UIViewController.swift"; sourceTree = "<group>"; };
 		EFC839472BC3F6250004E87A /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -71,21 +71,45 @@
 			isa = PBXGroup;
 			children = (
 				EFC839462BC3F5F70004E87A /* Models */,
-				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
-				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
+				EFAC1C2A2BCB49210067B8DA /* ViewControllers */,
+				EFAC1C2B2BCB49520067B8DA /* StoryBoard */,
+				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
+				EFBEEF0D2BCBCC0900711B1B /* App */,
+			);
+			path = ToDoList;
+			sourceTree = "<group>";
+		};
+		EFAC1C2A2BCB49210067B8DA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				EF60E17D2BB85DD0000530A0 /* StartViewController.swift */,
 				EF8371B92BB9439300FBCC38 /* TasksListViewController.swift */,
 				EF8371BB2BB9C08500FBCC38 /* HeaderTableViewCell.swift */,
-				EFAC1C262BCB35C70067B8DA /* TableViewCell.swift */,
 				EF9072112BBD42CD008252B0 /* DetailViewController.swift */,
 				EF73CBDD2BC86B120049B104 /* EditCategoryViewController.swift */,
 				EF368D542BC84DDF00E0EA71 /* CategoryViewController.swift */,
+				EFAC1C282BCB47B10067B8DA /* extention+UIViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		EFAC1C2B2BCB49520067B8DA /* StoryBoard */ = {
+			isa = PBXGroup;
+			children = (
 				EF60E17F2BB85DD0000530A0 /* Main.storyboard */,
 				EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */,
-				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
+			);
+			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		EFBEEF0D2BCBCC0900711B1B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
+				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF60E1872BB85DD2000530A0 /* Info.plist */,
 			);
-			path = ToDoList;
+			path = App;
 			sourceTree = "<group>";
 		};
 		EFC839462BC3F5F70004E87A /* Models */ = {
@@ -172,7 +196,7 @@
 				EF60E17C2BB85DD0000530A0 /* SceneDelegate.swift in Sources */,
 				EF8371BA2BB9439300FBCC38 /* TasksListViewController.swift in Sources */,
 				EF368D552BC84DDF00E0EA71 /* CategoryViewController.swift in Sources */,
-				EFAC1C272BCB35C70067B8DA /* TableViewCell.swift in Sources */,
+				EFAC1C292BCB47B10067B8DA /* extention+UIViewController.swift in Sources */,
 				EF8371BC2BB9C08500FBCC38 /* HeaderTableViewCell.swift in Sources */,
 				EF73CBDE2BC86B120049B104 /* EditCategoryViewController.swift in Sources */,
 				EF9072122BBD42CD008252B0 /* DetailViewController.swift in Sources */,
@@ -330,7 +354,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ69DYWC4W;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_FILE = ToDoList/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -362,7 +386,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ69DYWC4W;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_FILE = ToDoList/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

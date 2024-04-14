@@ -7,29 +7,17 @@
 
 import UIKit
 
-class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+final class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet var usersPickerView: UIPickerView!
     
-    let profiles = DataStore.shared.profiles
-    let dm = DataStore.Manager()
+    private let profiles = DataStore.shared.profiles
+    private let dm = DataStore.Manager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         usersPickerView?.delegate = self
         usersPickerView?.dataSource = self
-    }
-    
-    func numberOfComponents (in pickerView: UIPickerView) -> Int {
-        1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        dm.getProfiles().count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        dm.getProfile(at: row).name
     }
     
     override func  prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -45,6 +33,18 @@ class StartViewController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         performSegue(withIdentifier: "segueTasks", sender: self)
+    }
+    
+    func numberOfComponents (in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        dm.getProfiles().count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        dm.getProfile(at: row).name
     }
 }
 

@@ -22,10 +22,10 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
     var indexCategory: Int = 0
     
     private var previousText: String?
-    
     private let dm = DataStore.Manager()
 
     @IBAction func canceledOrAddPressed(sender: UIButton) {
+        endEditing()
         guard let text = textField.text else { return }
         
         if sender.tag == 0 {
@@ -36,21 +36,19 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
             
             let dataCount = dm.getCategories(profileIndex: profileIndex).count
             let indexPath = IndexPath(row: dataCount - 1, section: 0)
+            
             tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-
+            
             previousText = textField.text
         }
     }
     
+    // MARK: - Overrides Methods
+
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear (animated)
 
         delegate?.didUpdate()
-    }
-    
-    func didUpdate(_ text: String) {
-        dm.renameCategory(profileIndex: profileIndex, index: indexCategory, newName: text)
-        tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,11 +60,11 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
         }
     }
 
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indexPath = tableView.indexPathForSelectedRow {
             let editCategoryVC = segue.destination as? EditCategoryViewController
             let name = dm.getCategory(profileIndex: profileIndex, categoryIndex: indexPath.row).name
+            
             editCategoryVC?.categoryName = name
             editCategoryVC?.delegate = self
             indexCategory = indexPath.row
@@ -90,6 +88,11 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
         cell.contentConfiguration = content
         
         return cell
+    }
+    
+    func didUpdate(_ text: String) {
+        dm.renameCategory(profileIndex: profileIndex, index: indexCategory, newName: text)
+        tableView.reloadData()
     }
 }
 

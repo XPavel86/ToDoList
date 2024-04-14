@@ -73,10 +73,8 @@
 				EFC839462BC3F5F70004E87A /* Models */,
 				EFAC1C2A2BCB49210067B8DA /* ViewControllers */,
 				EFAC1C2B2BCB49520067B8DA /* StoryBoard */,
-				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
-				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
 				EF60E1822BB85DD2000530A0 /* Assets.xcassets */,
-				EF60E1872BB85DD2000530A0 /* Info.plist */,
+				EFBEEF0D2BCBCC0900711B1B /* App */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -102,6 +100,16 @@
 				EF60E1842BB85DD2000530A0 /* LaunchScreen.storyboard */,
 			);
 			path = StoryBoard;
+			sourceTree = "<group>";
+		};
+		EFBEEF0D2BCBCC0900711B1B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EF60E1792BB85DD0000530A0 /* AppDelegate.swift */,
+				EF60E17B2BB85DD0000530A0 /* SceneDelegate.swift */,
+				EF60E1872BB85DD2000530A0 /* Info.plist */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		EFC839462BC3F5F70004E87A /* Models */ = {
@@ -346,7 +354,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ69DYWC4W;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_FILE = ToDoList/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -378,7 +386,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QQ69DYWC4W;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ToDoList/Info.plist;
+				INFOPLIST_FILE = ToDoList/App/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

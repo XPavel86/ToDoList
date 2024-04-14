@@ -30,7 +30,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     private var previousText: String = ""
     private var isCreate = false
     private var isDelete = false
-    private var changeText = false
+    private var isChangeText = false
     
     // MARK: - Overrides Methods
     override func viewDidLoad() {
@@ -132,7 +132,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        changeText = true
+        isChangeText = true
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
         return newText.count <= 1000
     }
@@ -167,7 +167,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     private func saveText() {
         let isEmpty = textView.text.isEmpty
         
-        if !isEmpty && previousText != textView.text && changeText && !isCreate && !isNewTask {
+        if !isEmpty && previousText != textView.text && isChangeText && !isCreate && !isNewTask {
             dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).text = textView.text
             print("saveChange")
         }
@@ -185,7 +185,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
         }
         
         isCreate = false
-        changeText = false
+        isChangeText = false
         isDelete = false
         
         previousText = textView.text

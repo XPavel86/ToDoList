@@ -44,7 +44,6 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     // MARK: - Overrides Methods
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear (animated)
 

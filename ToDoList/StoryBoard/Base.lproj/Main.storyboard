@@ -42,11 +42,24 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z0R-7p-YBS" userLabel="InfoButton">
+                                <rect key="frame" x="254" y="36" width="50" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="z0R-7p-YBS" secondAttribute="height" multiplier="25:17" id="DnL-rB-SJ5"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="info.circle" catalog="system"/>
+                                <connections>
+                                    <segue destination="3rr-vE-QSh" kind="show" id="ovZ-Xf-aDD"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="z0R-7p-YBS" secondAttribute="trailing" constant="16" id="78p-0g-qyx"/>
                             <constraint firstItem="AOw-Gj-068" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="DQs-k7-MPD"/>
+                            <constraint firstItem="z0R-7p-YBS" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="HUU-pP-LSV"/>
                             <constraint firstItem="AOw-Gj-068" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="WHM-jD-Onb"/>
                         </constraints>
                     </view>
@@ -57,6 +70,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="172" y="-30"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="H8q-Hx-6wN">
+            <objects>
+                <viewController id="3rr-vE-QSh" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="47e-wV-tUG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="isi-Ae-wvn">
+                                <rect key="frame" x="16" y="16" width="288" height="516"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="О программе" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xeW-C1-zkt">
+                                        <rect key="frame" x="58.5" y="0.0" width="171.5" height="45"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="45" id="QYT-vo-KpK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutScreen" highlightedImage="aboutScreen" translatesAutoresizingMaskIntoConstraints="NO" id="g4t-PO-RLX">
+                                        <rect key="frame" x="9" y="60" width="270" height="357.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="g4t-PO-RLX" secondAttribute="height" multiplier="194:257" id="lSF-UV-wU7"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To-Do List" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJ5-ob-UGh">
+                                        <rect key="frame" x="77" y="432.5" width="134" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="oUZ-q8-uix"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All rights reserved" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9E-kY-3eM">
+                                        <rect key="frame" x="75" y="495.5" width="138" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20.5" id="S8x-Ag-bFD"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="axj-MT-aa8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="axj-MT-aa8" firstAttribute="trailing" secondItem="isi-Ae-wvn" secondAttribute="trailing" constant="16" id="G2w-Ze-4A4"/>
+                            <constraint firstItem="axj-MT-aa8" firstAttribute="bottom" secondItem="isi-Ae-wvn" secondAttribute="bottom" constant="16" id="Qzj-1X-cB3"/>
+                            <constraint firstItem="isi-Ae-wvn" firstAttribute="leading" secondItem="axj-MT-aa8" secondAttribute="leading" constant="16" id="dpe-eP-o6x"/>
+                            <constraint firstItem="isi-Ae-wvn" firstAttribute="top" secondItem="axj-MT-aa8" secondAttribute="top" constant="16" id="eoQ-mf-V9Y"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="d3x-ov-ZDc"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UnY-lL-pET" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="171" y="723"/>
         </scene>
         <!--Root View Controller-->
         <scene sceneID="pY3-2u-qfe">
@@ -489,18 +564,20 @@
         <segue reference="YDs-BX-ECD"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="arrow.uturn.backward" catalog="system" width="128" height="113"/>
-        <image name="arrowshape.left" catalog="system" width="128" height="104"/>
-        <image name="arrowshape.right" catalog="system" width="128" height="104"/>
+        <image name="aboutScreen" width="842" height="1378"/>
+        <image name="arrow.uturn.backward" catalog="system" width="128" height="115"/>
+        <image name="arrowshape.left" catalog="system" width="128" height="109"/>
+        <image name="arrowshape.right" catalog="system" width="128" height="109"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="doc.on.doc" catalog="system" width="116" height="128"/>
-        <image name="folder" catalog="system" width="128" height="96"/>
-        <image name="gearshape" catalog="system" width="128" height="123"/>
-        <image name="plus.app" catalog="system" width="128" height="114"/>
-        <image name="plus.rectangle.on.folder" catalog="system" width="128" height="95"/>
-        <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
+        <image name="folder" catalog="system" width="128" height="100"/>
+        <image name="gearshape" catalog="system" width="128" height="128"/>
+        <image name="info.circle" catalog="system" width="128" height="128"/>
+        <image name="plus.app" catalog="system" width="128" height="115"/>
+        <image name="plus.rectangle.on.folder" catalog="system" width="128" height="97"/>
+        <image name="slider.vertical.3" catalog="system" width="128" height="108"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
-        <image name="trash" catalog="system" width="117" height="128"/>
+        <image name="trash" catalog="system" width="115" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

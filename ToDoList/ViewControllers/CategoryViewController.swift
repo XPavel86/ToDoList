@@ -93,5 +93,21 @@ final class CategoryViewController: UIViewController, UITableViewDelegate, UITab
         dm.renameCategory(profileIndex: profileIndex, index: indexCategory, newName: text)
         tableView.reloadData()
     }
+    
+     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let rightAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
+                
+            self.dm.removeCategory(profileIndex: self.profileIndex, at: indexPath.row)
+            tableView.reloadData()
+            
+            completionHandler(true)
+        }
+        rightAction.image = UIImage(systemName: "trash.fill")
+        rightAction.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [rightAction])
+        return configuration
+    }
+
 }
 

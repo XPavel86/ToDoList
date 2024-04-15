@@ -69,7 +69,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="172" y="-30"/>
+            <point key="canvasLocation" x="170.625" y="-30.633802816901408"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="H8q-Hx-6wN">
@@ -195,7 +195,7 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TaskCell" textLabel="qep-pa-wsR" detailTextLabel="LVY-P0-2e0" rowHeight="59" style="IBUITableViewCellStyleSubtitle" id="hQt-Cp-sNG">
                                 <rect key="frame" x="16" y="149" width="288" height="59"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hQt-Cp-sNG" id="Grw-h2-dZT"  customModule="ToDoList" customModuleProvider="target">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hQt-Cp-sNG" id="Grw-h2-dZT">
                                     <rect key="frame" x="0.0" y="0.0" width="288" height="59"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
@@ -565,30 +565,30 @@
     </inferredMetricsTieBreakers>
     <resources>
         <image name="aboutScreen" width="842" height="1378"/>
-        <image name="arrow.uturn.backward" catalog="system" width="128" height="115"/>
-        <image name="arrowshape.left" catalog="system" width="128" height="109"/>
-        <image name="arrowshape.right" catalog="system" width="128" height="109"/>
+        <image name="arrow.uturn.backward" catalog="system" width="128" height="113"/>
+        <image name="arrowshape.left" catalog="system" width="128" height="104"/>
+        <image name="arrowshape.right" catalog="system" width="128" height="104"/>
         <image name="checkmark" catalog="system" width="128" height="114"/>
         <image name="doc.on.doc" catalog="system" width="116" height="128"/>
-        <image name="folder" catalog="system" width="128" height="100"/>
-        <image name="gearshape" catalog="system" width="128" height="128"/>
-        <image name="info.circle" catalog="system" width="128" height="128"/>
-        <image name="plus.app" catalog="system" width="128" height="115"/>
-        <image name="plus.rectangle.on.folder" catalog="system" width="128" height="97"/>
-        <image name="slider.vertical.3" catalog="system" width="128" height="108"/>
+        <image name="folder" catalog="system" width="128" height="96"/>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
+        <image name="info.circle" catalog="system" width="128" height="123"/>
+        <image name="plus.app" catalog="system" width="128" height="114"/>
+        <image name="plus.rectangle.on.folder" catalog="system" width="128" height="95"/>
+        <image name="slider.vertical.3" catalog="system" width="128" height="110"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
-        <image name="trash" catalog="system" width="115" height="128"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

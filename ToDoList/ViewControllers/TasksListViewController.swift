@@ -12,6 +12,9 @@ protocol TasksViewControllerDelegate: AnyObject {
 }
 
 final class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
+   //UITableViewDragDelegate
+   
+    
     
     // MARK: - IB Outlets
     @IBOutlet var editButton: UIBarButtonItem!
@@ -33,6 +36,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     struct SearchData {
         var text: String
+        var check: Bool
         var indexCategory: Int
         var indexTask: Int
     }
@@ -46,7 +50,83 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         super.viewDidLoad()
         title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
+        
+       
+                let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+                tableView.addGestureRecognizer(longPressGesture)
     }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+            if gestureRecognizer.state == .began {
+                let touchPoint = gestureRecognizer.location(in: tableView)
+                if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                    
+                    didLongPressCell(at: indexPath)
+                }
+            }
+        }
+        
+        func didLongPressCell(at indexPath: IndexPath) {
+            // Ваш код для обработки долгого нажатия на ячейку
+            print("Долгое нажатие на ячейку в секции \(indexPath.section) и строке \(indexPath.row)")
+            self.isEditing = true
+        }
+    
+
+//    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
+//        print(#function)
+//        self.isEditing = false
+//}
+
+    func tableView( _ tableView: UITableView, dragSessionDidEnd: any UIDragSession) {
+        print(#function)
+        self.isEditing = false
+    }
+    
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let leftAction = UIContextualAction(style: .normal, title: "Check") { (action, view, completionHandler) in
+ 
+            if self.isSearching {
+                let indexCategory = self.searchResult[indexPath.row].indexCategory
+                let indexTask = self.searchResult[indexPath.row].indexTask
+                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexCategory, taskIndex: indexTask).ready.toggle()
+                
+            } else {
+                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexPath.section, taskIndex: indexPath.row).ready.toggle()
+            }
+
+            self.didUpdate()
+            completionHandler(true)
+        }
+        leftAction.image = UIImage(systemName: "Checkmark")
+        leftAction.backgroundColor = .green
+        
+        let configuration = UISwipeActionsConfiguration(actions: [leftAction])
+        return configuration
+    }
+
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let rightAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
+   
+            if self.isSearching {
+                let indexCategory = self.searchResult[indexPath.row].indexCategory
+                let indexTask = self.searchResult[indexPath.row].indexTask
+                self.dm.removeTask(profileIndex: self.profileIndex, categoryIndex: indexCategory, removeTaskIndex: indexTask)
+                
+            } else {
+                self.dm.removeTask(profileIndex: self.profileIndex, categoryIndex: indexPath.section, removeTaskIndex: indexPath.row)
+            }
+  
+            self.didUpdate()
+            completionHandler(true)
+        }
+        rightAction.image = UIImage(systemName: "trash.fill")
+        rightAction.backgroundColor = .red
+        
+        let configuration = UISwipeActionsConfiguration(actions: [rightAction])
+        return configuration
+    }
+
     
     // MARK: - Overrides Methods
     override func viewDidLayoutSubviews() {
@@ -166,6 +246,9 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         if isSearching {
             content.text = searchResult[indexPath.row].text
             content.secondaryText = extractSecondString(searchResult[indexPath.row].text)
+            
+            let isCheck = searchResult[indexPath.row].check
+            setCheckmark(isCheck: isCheck)
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
@@ -176,18 +259,21 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             } else {
                 cell.layer.borderColor = UIColor.gray.cgColor
             }
+            setCheckmark(isCheck: task.ready)
             
             content.text = String(indexPath.row + 1) + ". " + task.text
-            
-            if task.ready {
-                content.image = UIImage(systemName: "checkmark")
-            } else {
-                content.image = UIImage()
-            }
             content.secondaryText = extractSecondString(task.text)
         }
         
         cell.contentConfiguration = content
+        
+        func setCheckmark(isCheck: Bool) {
+            if isCheck {
+                content.image = UIImage(systemName: "checkmark")
+            } else {
+                content.image = UIImage()
+            }
+        }
         
         func extractSecondString(_ inputText: String) -> String {
             let substrings = inputText.split(separator: "\n")
@@ -233,8 +319,14 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
             dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach {
                 indexTask, element in
-                    let result = SearchData(text: element.text, indexCategory: categoryIndex, indexTask: indexTask)
-                        searchData.append(result)
+                let result = SearchData(
+                    text: element.text,
+                    check: element.ready,
+                    indexCategory: categoryIndex,
+                    indexTask: indexTask
+                )
+                
+                searchData.append(result)
             }
         }
     }

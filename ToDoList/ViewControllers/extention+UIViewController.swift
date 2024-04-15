@@ -19,16 +19,3 @@ extension UIViewController {
     }
 }
 
-import UIKit
-
-extension UITableView {
-    
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        endEditing()
-        super.touchesBegan(touches, with: event)
-        
-        func endEditing() {
-            self.endEditing(true)
-       }
-    }
-}

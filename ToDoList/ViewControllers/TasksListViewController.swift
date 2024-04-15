@@ -31,13 +31,14 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
 
     private var isSearching = false
     
-    struct SearchResult {
+    struct SearchData {
         var text: String
         var indexCategory: Int
         var indexTask: Int
     }
     
-    private var searchData: [SearchResult] = []
+    private var searchData: [SearchData] = []
+    private var searchResult: [SearchData] = []
     
     
     // MARK: - Initializers
@@ -71,8 +72,8 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             if let indexPath = tableView.indexPathForSelectedRow
             {
                 if isSearching {
-                    let indexCategory = searchData[indexPath.row].indexCategory
-                    let indexTask = searchData[indexPath.row].indexTask
+                    let indexCategory = searchResult[indexPath.row].indexCategory
+                    let indexTask = searchResult[indexPath.row].indexTask
                     
                     sendDelegate(profileIndex, indexCategory, indexTask, false)
                     
@@ -118,7 +119,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearching {
-            return searchData.count
+            return searchResult.count
         } else {
             return dm.getTasks(profileIndex: profileIndex, categoryIndex: section).count
         }
@@ -163,8 +164,8 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         content.secondaryTextProperties.numberOfLines = 1
         
         if isSearching {
-            content.text = searchData[indexPath.row].text
-            content.secondaryText = extractSecondString(searchData[indexPath.row].text)
+            content.text = searchResult[indexPath.row].text
+            content.secondaryText = extractSecondString(searchResult[indexPath.row].text)
         } else
         {
             let task = profile.categories[indexPath.section].tasks[indexPath.row]
@@ -211,6 +212,11 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     // MARK: - Public Methods
     func didUpdate() {
+        print(#function)
+        if isSearching {
+            searchBarTextDidBeginEditing(searchBar)
+            searchBar(searchBar, textDidChange: searchBar.text ?? "")
+        }
         tableView.reloadData()
     }
     
@@ -218,22 +224,32 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         selectedSection = section
     }
     
-    // MARK: - Private Methods
+    // MARK: - Private Methods SearchBar
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchData.removeAll()
+        print(#function)
+        for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
+            dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach {
+                indexTask, element in
+                    let result = SearchData(text: element.text, indexCategory: categoryIndex, indexTask: indexTask)
+                        searchData.append(result)
+            }
+        }
+    }
+
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(#function)
+        searchResult.removeAll()
+        // мы должны добавить в массив все элементы при начале редактирования +
+        // а затем их фильтровать в процессе редактирования +
+        // при возврате мы должны обновить поиск +
+        // возможность удалить из поиска как сам результат и элемент из массива
         if searchText.isEmpty {
             isSearching = false
-            searchData.removeAll()
+            searchResult.removeAll()
         } else {
-            for categoryIndex in 0 ..< dm.getCategories(profileIndex: profileIndex).count {
-                dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach { indexTask, element in
-                    if element.text.lowercased().contains(searchText.lowercased()) {
-                        let result = SearchResult(text: element.text, indexCategory: categoryIndex, indexTask: indexTask)
-                        if !searchData.contains(where: { $0.text == result.text }) {
-                            searchData.append(result)
-                        }
-                    }
-                }
-            }
+            searchResult = searchData.filter { $0.text.lowercased().contains(searchText.lowercased()) }
             isSearching = true
         }
         tableView.reloadData()

@@ -212,6 +212,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     // MARK: - Public Methods
     func didUpdate() {
+        // добавить - обновить, если данные были изменены
         print(#function)
         if isSearching {
             searchBarTextDidBeginEditing(searchBar)

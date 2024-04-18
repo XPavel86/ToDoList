@@ -27,7 +27,7 @@ final class DataStore {
     
     class Task {
         var text: String = ""
-        var ready: Bool = false
+        var isReady: Bool = false
     }
     
     
@@ -141,7 +141,7 @@ final class DataStore {
                     for taskIndex in 1...10 {
                         let task = Task()
                         task.text = "Task \(taskIndex) in Category \(categoryIndex) of Profile \(profileIndex)"
-                        task.ready = Bool.random()
+                        task.isReady = Bool.random()
                         
                         category.tasks.append(task)
                     }

@@ -12,9 +12,6 @@ protocol TasksViewControllerDelegate: AnyObject {
 }
 
 final class TasksListViewController: UITableViewController, TasksViewControllerDelegate,  UISearchBarDelegate {
-   //UITableViewDragDelegate
-   
-    
     
     // MARK: - IB Outlets
     @IBOutlet var editButton: UIBarButtonItem!
@@ -31,12 +28,12 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     private var isNewTask: Bool = false
     private var selectedSection: Int!
     
-
+    
     private var isSearching = false
     
-    struct SearchData {
-        var text: String
-        var check: Bool
+    private struct SearchData {
+        var textTask: String
+        var isReady: Bool
         var indexCategory: Int
         var indexTask: Int
     }
@@ -51,33 +48,25 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         title = dm.getProfile(at: profileIndex).name
         searchBar.delegate = self
         
-       
-                let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
-                tableView.addGestureRecognizer(longPressGesture)
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        tableView.addGestureRecognizer(longPressGesture)
     }
     
     @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
-            if gestureRecognizer.state == .began {
-                let touchPoint = gestureRecognizer.location(in: tableView)
-                if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                    
-                    didLongPressCell(at: indexPath)
-                }
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                didLongPressCell(at: indexPath)
             }
         }
-        
-        func didLongPressCell(at indexPath: IndexPath) {
-            // Ваш код для обработки долгого нажатия на ячейку
-            print("Долгое нажатие на ячейку в секции \(indexPath.section) и строке \(indexPath.row)")
-            self.isEditing = true
-        }
+    }
     
-
-//    func tableView(_ tableView: UITableView, dragSessionDidEnd session: UIDragSession) {
-//        print(#function)
-//        self.isEditing = false
-//}
-
+    func didLongPressCell(at indexPath: IndexPath) {
+        print("Long tap \(indexPath.section) \(indexPath.row)")
+        //self.isEditing = true
+    }
+    
     func tableView( _ tableView: UITableView, dragSessionDidEnd: any UIDragSession) {
         print(#function)
         self.isEditing = false
@@ -85,29 +74,29 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let leftAction = UIContextualAction(style: .normal, title: "Check") { (action, view, completionHandler) in
- 
+            
             if self.isSearching {
                 let indexCategory = self.searchResult[indexPath.row].indexCategory
                 let indexTask = self.searchResult[indexPath.row].indexTask
-                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexCategory, taskIndex: indexTask).ready.toggle()
+                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexCategory, taskIndex: indexTask).isReady.toggle()
                 
             } else {
-                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexPath.section, taskIndex: indexPath.row).ready.toggle()
+                self.dm.getTask(profileIndex: self.profileIndex, categoryIndex: indexPath.section, taskIndex: indexPath.row).isReady.toggle()
             }
-
+            
             self.didUpdate()
             completionHandler(true)
         }
-        leftAction.image = UIImage(systemName: "Checkmark")
+        leftAction.image = UIImage(systemName: "checkmark")
         leftAction.backgroundColor = .green
         
         let configuration = UISwipeActionsConfiguration(actions: [leftAction])
         return configuration
     }
-
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let rightAction = UIContextualAction(style: .normal, title: "Delete") { (action, view, completionHandler) in
-   
+            
             if self.isSearching {
                 let indexCategory = self.searchResult[indexPath.row].indexCategory
                 let indexTask = self.searchResult[indexPath.row].indexTask
@@ -116,7 +105,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             } else {
                 self.dm.removeTask(profileIndex: self.profileIndex, categoryIndex: indexPath.section, removeTaskIndex: indexPath.row)
             }
-  
+            
             self.didUpdate()
             completionHandler(true)
         }
@@ -126,7 +115,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         let configuration = UISwipeActionsConfiguration(actions: [rightAction])
         return configuration
     }
-
+    
     
     // MARK: - Overrides Methods
     override func viewDidLayoutSubviews() {
@@ -244,10 +233,10 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
         content.secondaryTextProperties.numberOfLines = 1
         
         if isSearching {
-            content.text = searchResult[indexPath.row].text
-            content.secondaryText = extractSecondString(searchResult[indexPath.row].text)
+            content.text = searchResult[indexPath.row].textTask
+            content.secondaryText = extractSecondString(searchResult[indexPath.row].textTask)
             
-            let isCheck = searchResult[indexPath.row].check
+            let isCheck = searchResult[indexPath.row].isReady
             setCheckmark(isCheck: isCheck)
         } else
         {
@@ -259,7 +248,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             } else {
                 cell.layer.borderColor = UIColor.gray.cgColor
             }
-            setCheckmark(isCheck: task.ready)
+            setCheckmark(isCheck: task.isReady)
             
             content.text = String(indexPath.row + 1) + ". " + task.text
             content.secondaryText = extractSecondString(task.text)
@@ -298,8 +287,6 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     // MARK: - Public Methods
     func didUpdate() {
-        // добавить - обновить, если данные были изменены
-        print(#function)
         if isSearching {
             searchBarTextDidBeginEditing(searchBar)
             searchBar(searchBar, textDidChange: searchBar.text ?? "")
@@ -320,29 +307,24 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
             dm.getCategory(profileIndex: profileIndex, categoryIndex: categoryIndex).tasks.enumerated().forEach {
                 indexTask, element in
                 let result = SearchData(
-                    text: element.text,
-                    check: element.ready,
+                    textTask: element.text,
+                    isReady: element.isReady,
                     indexCategory: categoryIndex,
                     indexTask: indexTask
                 )
-                
                 searchData.append(result)
             }
         }
     }
-
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        print(#function)
         searchResult.removeAll()
-        // мы должны добавить в массив все элементы при начале редактирования +
-        // а затем их фильтровать в процессе редактирования +
-        // при возврате мы должны обновить поиск +
-        // возможность удалить из поиска как сам результат и элемент из массива
         if searchText.isEmpty {
             isSearching = false
             searchResult.removeAll()
         } else {
-            searchResult = searchData.filter { $0.text.lowercased().contains(searchText.lowercased()) }
+            searchResult = searchData.filter { $0.textTask.lowercased().contains(searchText.lowercased())
+            }
             isSearching = true
         }
         tableView.reloadData()

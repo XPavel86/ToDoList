@@ -118,7 +118,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     @IBAction func changeStatusTask() {
         guard !isNewTask else { return }
         if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
-            dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready.toggle()
+            dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).isReady.toggle()
             changeColor()
         }
     }
@@ -194,7 +194,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, DataDelegate {
     private func changeColor() {
         guard !isNewTask else { return }
         if !dm.getTasks(profileIndex: profileIndex, categoryIndex: categoryIndex).isEmpty {
-            checkImageView.isHidden = !dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).ready
+            checkImageView.isHidden = !dm.getTask(profileIndex: profileIndex, categoryIndex: categoryIndex, taskIndex: taskIndex).isReady
         }
     }
     

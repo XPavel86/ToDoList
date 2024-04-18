@@ -171,15 +171,14 @@
                                     <rect key="frame" x="0.0" y="0.0" width="288" height="55"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDC-HV-utF" userLabel="categoryLabel">
-                                            <rect key="frame" x="0.0" y="17" width="220" height="26.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDC-HV-utF" userLabel="categoryLabel">
+                                            <rect key="frame" x="0.0" y="14.5" width="220" height="26.5"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="22"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="center" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-Np-tIe">
-                                            <rect key="frame" x="222" y="13" width="50" height="34"/>
+                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vAI-Np-tIe">
+                                            <rect key="frame" x="222" y="10.5" width="50" height="34"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="34" id="noE-N1-XY7"/>
                                             </constraints>
@@ -198,6 +197,8 @@
                                         </button>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="vAI-Np-tIe" firstAttribute="centerY" secondItem="jtm-l5-bPb" secondAttribute="centerY" id="8ca-d6-AWj"/>
+                                        <constraint firstItem="eDC-HV-utF" firstAttribute="centerY" secondItem="jtm-l5-bPb" secondAttribute="centerY" id="GWX-r0-rTY"/>
                                         <constraint firstAttribute="trailing" secondItem="vAI-Np-tIe" secondAttribute="trailing" constant="16" id="MVb-rJ-jl0"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -653,7 +654,7 @@
                 <navigationController id="gx5-bH-rbL" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="NbA-r2-hMH"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="0bW-Ul-8ek">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="98.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="92.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

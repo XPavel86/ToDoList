@@ -28,7 +28,6 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     private var isNewTask: Bool = false
     private var selectedSection: Int!
     
-    
     private var isSearching = false
     
     private struct SearchData {
@@ -296,6 +295,7 @@ final class TasksListViewController: UITableViewController, TasksViewControllerD
     
     func buttonPressed(inSection section: Int) {
         selectedSection = section
+        performSegue(withIdentifier: "DetailSegueAdd", sender: nil)
     }
     
     // MARK: - Private Methods SearchBar

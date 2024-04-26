@@ -191,8 +191,7 @@
                                                 <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                             </buttonConfiguration>
                                             <connections>
-                                                <action selector="addTaskPressed" destination="TmF-vV-xDo" eventType="touchUpInside" id="sxD-KU-LuW"/>
-                                                <segue destination="L0L-Xi-65Y" kind="show" identifier="DetailSegueAdd" id="IEr-3z-UIc"/>
+                                                <action selector="addTaskPressed" destination="TmF-vV-xDo" eventType="touchUpInside" id="ZdP-MZ-OhR"/>
                                             </connections>
                                         </button>
                                     </subviews>
@@ -266,6 +265,7 @@
                     <connections>
                         <outlet property="editButton" destination="lZ8-L4-WHj" id="Zz8-Rw-ld1"/>
                         <outlet property="searchBar" destination="CV9-qZ-p3G" id="6HS-Ex-hs6"/>
+                        <segue destination="L0L-Xi-65Y" kind="show" identifier="DetailSegueAdd" id="DH4-wW-esP"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4D-UY-bRO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -667,7 +667,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="YDs-BX-ECD"/>
+        <segue reference="DH4-wW-esP"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="aboutScreen" width="842" height="1378"/>
@@ -688,16 +688,16 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="secondarySystemBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
